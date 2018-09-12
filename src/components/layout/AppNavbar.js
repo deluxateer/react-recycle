@@ -7,7 +7,7 @@ class AppNavbar extends Component {
       <nav className="navbar navbar-expand-md navbar-dark bg-success mb-4">
         <div className="container">
           <Link to="/" className="navbar-brand">
-            React Recycle
+            <i className="fas fa-recycle" /> React Recycle
           </Link>
           <button
             className="navbar-toggler"

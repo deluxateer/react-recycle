@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
-class Sidebar extends Component {
+class Summary extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1>Sidebar</h1>
+        <h2>Summary</h2>
       </React.Fragment>
     );
   }
 }
 
-export default Sidebar;
+export default Summary;
