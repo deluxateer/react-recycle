@@ -8,14 +8,32 @@ import steel from "../../media/steel.jpeg";
 
 class Item extends Component {
   render() {
+    const { itemName, material, weight, weightUnit, quantity } = this.props;
+
+    // Use ES6 object computed keys to match material types to correct imgs
+    const materials = {
+      aluminum,
+      cardboard,
+      glass,
+      paper,
+      plastic,
+      steel
+    };
+
     return (
       <div className="item-card card">
-        <img className="w-100 h-100" src={glass} alt="glass" />
+        <img
+          className="w-100 h-100"
+          src={materials[material.toLowerCase()]}
+          alt={material}
+        />
         <div className="card-body p-3">
           <div className="d-flex justify-content-between mb-2">
             <div>
-              <h5 className="card-title mb-2">Coke Bottles</h5>
-              <h6 className="card-subtitle text-muted">Plastic, Qty. 3</h6>
+              <h5 className="card-title mb-2">{itemName}</h5>
+              <h6 className="card-subtitle text-muted">
+                {material}, Qty. {quantity}
+              </h6>
             </div>
             <div className="d-flex">
               <i className="fas fa-pencil-alt" />
@@ -23,7 +41,9 @@ class Item extends Component {
             </div>
           </div>
           <div className="d-flex justify-content-between">
-            <p className="card-text mb-0">3 oz each</p>
+            <p className="card-text mb-0">
+              {weight} {weightUnit} {quantity > 1 ? "each" : null}
+            </p>
             <a href="#" className="card-link text-success">
               Duplicate
             </a>

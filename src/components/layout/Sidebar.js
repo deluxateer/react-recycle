@@ -21,7 +21,7 @@ class Sidebar extends Component {
       },
       {
         itemName: "Fork Set",
-        material: "Paper",
+        material: "Steel",
         weight: 2,
         weightUnit: "oz",
         quantity: 1
@@ -32,18 +32,29 @@ class Sidebar extends Component {
   render() {
     const { items } = this.state;
 
-    const mostRecentSize = 2;
+    const mostRecentSize = 5;
     const mostRecentItems = items
       .slice(0, mostRecentSize)
-      .map((item, currIndex) => <p key={currIndex}>{item.itemName}</p>);
+      .map((item, currIndex) => (
+        <Item
+          key={currIndex}
+          itemName={item.itemName}
+          material={item.material}
+          weight={item.weight}
+          weightUnit={item.weightUnit}
+          quantity={item.quantity}
+        />
+      ));
 
     return (
       <div id="sidebar">
         <h2 className="text-sm-center text-md-center">
           Most Recent Recycled Items
         </h2>
-        <Item />
-        <Item />
+        {mostRecentItems}
+        <a href="#" className="text-success d-block text-center">
+          See All Items
+        </a>
       </div>
     );
   }
