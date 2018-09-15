@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import aluminum from "../../media/aluminum.jpeg";
 import cardboard from "../../media/cardboard.jpeg";
 import glass from "../../media/glass.jpeg";
@@ -53,5 +54,13 @@ class Item extends Component {
     );
   }
 }
+
+Item.propTypes = {
+  itemName: PropTypes.string.isRequired,
+  material: PropTypes.string.isRequired,
+  weight: PropTypes.number.isRequired,
+  weightUnit: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired
+};
 
 export default Item;

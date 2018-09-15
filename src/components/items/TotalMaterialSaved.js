@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class TotalMaterialSaved extends Component {
   //camelCase to spaces for the analogies
@@ -31,5 +32,10 @@ class TotalMaterialSaved extends Component {
     );
   }
 }
+
+TotalMaterialSaved.propTypes = {
+  type: PropTypes.string.isRequired,
+  analogies: PropTypes.array.isRequired
+};
 
 export default TotalMaterialSaved;
