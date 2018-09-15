@@ -1,5 +1,51 @@
+/* ---------------
+Item Card
+------------------*/
+
+.item-card {
+  display: grid;
+  grid-template-columns: 2fr 5fr;
+}
+
+/* ---------------
+Sidebar
+------------------*/
+
+#sidebar .card {
+  margin: 1em 0;
+}
+
+/* ---------------
+  Summary
+  ------------------*/
+
 .totalMaterialsGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   grid-gap: 1em;
+}
+
+/* ---------------------------------
+MEDIA QUERIES
+------------------------------------*/
+
+@media only screen and (max-width: 991px) {
+  #sidebar .card {
+    max-width: 400px;
+    margin: 1em auto;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  /* ---------------
+  Summary
+  ------------------*/
+
+  .totalMaterialsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
 }

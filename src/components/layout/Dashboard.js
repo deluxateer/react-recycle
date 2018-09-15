@@ -4,12 +4,12 @@ import Sidebar from "./Sidebar";
 
 export default () => {
   return (
-    <div className="row">
-      <div className="col-md-4">
-        <Sidebar />
-      </div>
-      <div className="col-md">
+    <div className="dashboard row">
+      <div className="col-lg non-sidebar order-lg-2">
         <Summary />
+      </div>
+      <div className="col-lg-4 sidebar order-lg-1 mt-3 mt-lg-0">
+        <Sidebar />
       </div>
     </div>
   );
