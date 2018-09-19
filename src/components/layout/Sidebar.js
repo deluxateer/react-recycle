@@ -4,8 +4,8 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import PropTypes from "prop-types";
+
 import Item from "../items/Item";
-import Spinner from "./Spinner";
 
 class Sidebar extends Component {
   render() {
@@ -25,6 +25,7 @@ class Sidebar extends Component {
             quantity={item.quantity}
           />
         ));
+
       return (
         <div id="sidebar">
           <h2 className="text-sm-center text-md-center">
@@ -37,14 +38,7 @@ class Sidebar extends Component {
         </div>
       );
     } else {
-      return (
-        <div id="sidebar">
-          <h2 className="text-sm-center text-md-center">
-            Most Recent Recycled Items
-          </h2>
-          <Spinner />
-        </div>
-      );
+      return null;
     }
   }
 }

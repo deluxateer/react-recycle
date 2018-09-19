@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
 import aluminum from "../../media/aluminum.jpeg";
 import cardboard from "../../media/cardboard.jpeg";
 import glass from "../../media/glass.jpeg";

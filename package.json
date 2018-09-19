@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "convert-units": "^2.3.4",
     "firebase": "^5.5.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
