@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
+import convert from "convert-units";
 import PropTypes from "prop-types";
 
 import Trivia from "./Trivia";
@@ -67,24 +68,60 @@ class Summary extends Component {
     ]
   };
 
-  calculateTotalEnergy = energyOneMaterial => {
-    const { totalEnergy } = this.state;
-    // console.log(
-    //   `calculating total energy -summaryCalcFunc energyonematerial: ${energyOneMaterial}`
-    // );
+  // @todo: figure out the math for calculating totals of materials and send it to Summary comp
+  static getDerivedStateFromProps(props, state) {
+    const { items } = props;
+    const { totalMaterials } = state;
 
-    const currTotal = energyOneMaterial + totalEnergy;
-    // console.log(`currTotal: ${currTotal}`);
+    if (items) {
+      const totalResourcesSaved = {
+        totalEnergy: 0
+      };
+      // Calculate total resources saved for each material type
+      totalMaterials.forEach(totalMaterial => {
+        // take only elements that match the material you are calcuating for
+        const singleElementItems = items.filter(
+          item => item.material == totalMaterial.type
+        );
 
-    this.setState((state, props) => ({
-      ...state,
-      totalEnergy: currTotal
-    }));
-  };
+        const totalWeight = singleElementItems.reduce((total, item) => {
+          // convert item to user chosen weight unit here
+          // @todo: change to units chosen from user settings
+          const adjustedWeight = convert(item.weight)
+            .from(item.weightUnit)
+            .to("oz");
+          return total + parseFloat(adjustedWeight * item.quantity);
+        }, 0);
+
+        // convert to tons for calculating correct ratios
+        const totalTons = convert(totalWeight)
+          .from("oz") //units chosen from user settings
+          .to("t");
+
+        const resourcesSaved = {};
+        totalMaterial.analogies.forEach(
+          analogy =>
+            (resourcesSaved[analogy.name] = parseFloat(
+              totalTons * analogy.perTon
+            ))
+        );
+        resourcesSaved["totalWeight"] = totalWeight;
+        resourcesSaved["totalWeightUnit"] = "oz";
+
+        totalResourcesSaved[totalMaterial.type] = resourcesSaved;
+        totalResourcesSaved.totalEnergy += resourcesSaved.energy;
+      });
+
+      return {
+        ...totalResourcesSaved
+      };
+    }
+
+    return null;
+  }
 
   render() {
     const { totalEnergy, totalMaterials } = this.state;
-    // console.log(`rendering - summary.js currEnergy ${totalEnergy}`);
 
     return (
       <React.Fragment>
@@ -111,7 +148,7 @@ class Summary extends Component {
               key={i}
               type={material.type}
               analogies={material.analogies}
-              sendTotalEnergy={this.collectEnergy}
+              resourcesSaved={this.state[material.type]}
             />
           ))}
         </div>
