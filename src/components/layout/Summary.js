@@ -68,7 +68,6 @@ class Summary extends Component {
     ]
   };
 
-  // @todo: figure out the math for calculating totals of materials and send it to Summary comp
   static getDerivedStateFromProps(props, state) {
     const { items } = props;
     const { totalMaterials } = state;
@@ -81,7 +80,7 @@ class Summary extends Component {
       totalMaterials.forEach(totalMaterial => {
         // take only elements that match the material you are calcuating for
         const singleElementItems = items.filter(
-          item => item.material == totalMaterial.type
+          item => item.material === totalMaterial.type
         );
 
         const totalWeight = singleElementItems.reduce((total, item) => {
@@ -122,7 +121,6 @@ class Summary extends Component {
 
   render() {
     const { totalEnergy, totalMaterials } = this.state;
-
     return (
       <React.Fragment>
         <Trivia />

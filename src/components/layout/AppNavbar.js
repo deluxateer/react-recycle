@@ -18,11 +18,61 @@ class AppNavbar extends Component {
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbarMain">
-            <ul className="navbar-nav mr-auto">
+            {/* <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <Link to="/" className="nav-link">
                   Dashboard
                 </Link>
+              </li>
+            </ul> */}
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to="/tipsfacts" className="nav-link">
+                  <i className="fas fa-lightbulb" /> Tips &amp; Facts
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/statistics" className="nav-link">
+                  <i className="fas fa-chart-bar" /> Statistics
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/item/add" className="nav-link">
+                  <i className="fas fa-plus" /> Add
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/items" className="nav-link">
+                  <i className="fas fa-clipboard-list" /> Items
+                </Link>
+              </li>
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#!"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  name@gmail.com
+                </a>
+                <div
+                  className="dropdown-menu bg-success"
+                  aria-labelledby="navbarDropdown"
+                >
+                  <Link to="/settings" className="dropdown-item text-light">
+                    <i className="fas fa-cog" /> Settings
+                  </Link>
+                  <a
+                    className="dropdown-item text-light"
+                    href="#!"
+                    onClick={this.onLogoutClick}
+                  >
+                    <i className="fas fa-door-open" /> Logout
+                  </a>
+                </div>
               </li>
             </ul>
           </div>

@@ -33,6 +33,14 @@ Item Card
 }
 
 /* ---------------
+Navbar
+------------------*/
+.dropdown-item:focus,
+.dropdown-item:hover {
+  background-color: #28a745 !important;
+}
+
+/* ---------------
 Sidebar
 ------------------*/
 
