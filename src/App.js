@@ -8,6 +8,7 @@ import AppNavbar from "./components/layout/AppNavbar";
 import Dashboard from "./components/layout/Dashboard";
 import Footer from "./components/layout/Footer";
 import AddItem from "./components/items/AddItem";
+import EditItem from "./components/items/EditItem";
 
 import "./App.css";
 
@@ -22,6 +23,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Dashboard} />
                 <Route exact path="/item/add" component={AddItem} />
+                <Route exact path="/item/edit/:id" component={EditItem} />
               </Switch>
             </div>
             <Footer />

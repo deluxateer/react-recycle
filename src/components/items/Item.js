@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import aluminum from "../../media/aluminum.jpeg";
@@ -10,8 +11,6 @@ import steel from "../../media/steel.jpeg";
 
 class Item extends Component {
   render() {
-    const { itemName, material, weight, weightUnit, quantity } = this.props;
-
     // Use ES6 object computed keys to match material types to correct imgs
     const materials = {
       aluminum,
@@ -21,6 +20,8 @@ class Item extends Component {
       plastic,
       steel
     };
+
+    const { id, itemName, material, weight, weightUnit, quantity } = this.props;
 
     return (
       <div className="item-card card">
@@ -38,8 +39,19 @@ class Item extends Component {
               </h6>
             </div>
             <div className="d-flex">
-              <i className="fas fa-pencil-alt" />
-              <i className="fas fa-times ml-4 text-danger" />
+              <Link
+                className="d-flex text-success"
+                to={`/item/edit/${id}`}
+                style={{ textDecoration: "none" }}
+              >
+                <i className="fas fa-pencil-alt" />
+              </Link>
+              <button className="btn btn-link position-relative p-0 ml-3 mr-1">
+                <i
+                  className="fas fa-times position-absolute text-danger"
+                  style={{ top: 0 }}
+                />
+              </button>
             </div>
           </div>
           <div className="d-flex justify-content-between">

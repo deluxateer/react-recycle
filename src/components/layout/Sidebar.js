@@ -14,7 +14,8 @@ class Sidebar extends Component {
     if (items) {
       const mostRecentItems = items.map((item, currIndex) => (
         <Item
-          key={currIndex}
+          key={item.id}
+          id={item.id}
           itemName={item.itemName}
           material={item.material}
           weight={item.weight}
