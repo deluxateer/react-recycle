@@ -6,8 +6,6 @@ import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import Spinner from "../layout/Spinner";
 
-// @todo: fix why duplicate items are rendered when editing an item
-
 class EditItem extends Component {
   constructor(props) {
     super(props);
@@ -30,10 +28,10 @@ class EditItem extends Component {
   //   }
   // };
 
+  // Updates Item
   onSubmit = e => {
     e.preventDefault();
 
-    // Update Item
     const updatedItem = {
       itemName: this.itemNameInput.current.value,
       material: this.materialInput.current.value,
@@ -46,7 +44,7 @@ class EditItem extends Component {
 
     firestore
       .update({ collection: "items", doc: item.id }, updatedItem)
-      .then(() => history.push("/"));
+      .then(() => history.goBack());
   };
 
   render() {

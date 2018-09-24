@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "convert-units": "^2.3.4",
-    "firebase": "^5.5.0",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0",
+    "firebase": "^5.5.1",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
     "react-redux-firebase": "^2.1.8",
     "react-router-dom": "^4.3.1",

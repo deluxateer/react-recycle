@@ -12,17 +12,23 @@ class Sidebar extends Component {
     const { items } = this.props;
 
     if (items) {
-      const mostRecentItems = items.map((item, currIndex) => (
-        <Item
-          key={item.id}
-          id={item.id}
-          itemName={item.itemName}
-          material={item.material}
-          weight={item.weight}
-          weightUnit={item.weightUnit}
-          quantity={item.quantity}
-        />
-      ));
+      const mostRecentSize = 5;
+      const mostRecentItems = items
+        .sort(
+          (a, b) => b.creationTimestamp.seconds - a.creationTimestamp.seconds
+        )
+        .slice(0, mostRecentSize)
+        .map((item, currIndex) => (
+          <Item
+            key={item.id}
+            id={item.id}
+            itemName={item.itemName}
+            material={item.material}
+            weight={item.weight}
+            weightUnit={item.weightUnit}
+            quantity={item.quantity}
+          />
+        ));
 
       return (
         <div id="sidebar">
@@ -49,11 +55,13 @@ Sidebar.propTypes = {
 export default compose(
   firestoreConnect(props => [
     {
-      collection: "items",
-      // possible bug, but as of now sorting will not work with just orderBy parameter.
-      // However, limit parameter is intentional in this case.
-      orderBy: ["creationTimestamp", "desc"],
-      limit: 5
+      collection: "items"
+      // Bugs with this package: orderBy doesn't work on its own, rerendering
+      // a page with this sidebar after another previous query mutates
+      // the Redux state.
+
+      // orderBy: ["creationTimestamp", "desc"],
+      // limit: 5
     }
   ]),
   connect((state, props) => ({
