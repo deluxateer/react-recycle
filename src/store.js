@@ -5,7 +5,7 @@ import { reactReduxFirebase, firebaseReducer } from "react-redux-firebase";
 import { reduxFirestore, firestoreReducer } from "redux-firestore";
 import { firebaseConfig } from "./credentials";
 // Reducers
-// @todo
+import tipsFactsReducer from "./reducers/tipsFactsReducer";
 
 // sample firebase config object with credentials
 const sampleFirebaseConfig = {
@@ -38,7 +38,8 @@ const createStoreWithFirebase = compose(
 
 const rootReducer = combineReducers({
   firebase: firebaseReducer,
-  firestore: firestoreReducer
+  firestore: firestoreReducer,
+  tipsAndFacts: tipsFactsReducer
   // notify: notifyReducer,
   // settings: settingsReducer
 });

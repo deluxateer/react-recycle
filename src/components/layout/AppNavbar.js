@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 class AppNavbar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-md navbar-dark bg-success mb-4">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-success mb-4">
         <div className="container">
           <Link to="/" className="navbar-brand">
             <i className="fas fa-recycle" /> React Recycle
@@ -18,13 +18,13 @@ class AppNavbar extends Component {
             <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbarMain">
-            {/* <ul className="navbar-nav mr-auto">
+            <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <Link to="/" className="nav-link">
-                  Dashboard
+                  Summary
                 </Link>
               </li>
-            </ul> */}
+            </ul>
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to="/tipsfacts" className="nav-link">
