@@ -12,7 +12,7 @@ import steel from "../../media/steel.jpeg";
 
 class Item extends Component {
   onDeleteClick = () => {
-    const { id, firestore, history } = this.props;
+    const { id, firestore } = this.props;
     firestore.delete({ collection: "items", doc: id });
   };
 
@@ -38,6 +38,9 @@ class Item extends Component {
     };
 
     firestore.add({ collection: "items" }, newItem);
+
+    // use get method to refresh redux state items after adding to firestore
+    firestore.get({ collection: "items" });
   };
 
   render() {
@@ -146,7 +149,7 @@ class Item extends Component {
               {weight} {weightUnit} {quantity > 1 ? "each" : null}
             </p>
             <a
-              href="#"
+              href="#!"
               onClick={this.onDuplicateClick}
               className="card-link text-success"
             >
@@ -160,6 +163,7 @@ class Item extends Component {
 }
 
 Item.propTypes = {
+  id: PropTypes.string.isRequired,
   itemName: PropTypes.string.isRequired,
   material: PropTypes.string.isRequired,
   weight: PropTypes.number.isRequired,

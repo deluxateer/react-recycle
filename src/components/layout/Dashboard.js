@@ -7,16 +7,21 @@ import PropTypes from "prop-types";
 import Summary from "./Summary";
 import Sidebar from "./Sidebar";
 import Spinner from "./Spinner";
+import Statistics from "./Statistics";
 
 class Dashboard extends Component {
   render() {
-    const { items } = this.props;
+    const { items, history } = this.props;
 
     if (items) {
       return (
         <div className="dashboard row">
           <div className="col-lg non-sidebar order-lg-2">
-            <Summary />
+            {history.location.pathname === "/statistics" ? (
+              <Statistics />
+            ) : (
+              <Summary />
+            )}
           </div>
           <div className="col-lg-4 sidebar order-lg-1 mt-3 mt-lg-0">
             <Sidebar />

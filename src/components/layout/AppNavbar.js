@@ -37,13 +37,13 @@ class AppNavbar extends Component {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/item/add" className="nav-link">
-                  <i className="fas fa-plus" /> Add
+                <Link to="/items" className="nav-link">
+                  <i className="fas fa-clipboard-list" /> Items
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/items" className="nav-link">
-                  <i className="fas fa-clipboard-list" /> Items
+                <Link to="/item/add" className="nav-link">
+                  <i className="fas fa-plus" /> Add
                 </Link>
               </li>
               <li className="nav-item dropdown">

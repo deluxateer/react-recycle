@@ -18,7 +18,7 @@ class Sidebar extends Component {
           (a, b) => b.creationTimestamp.seconds - a.creationTimestamp.seconds
         )
         .slice(0, mostRecentSize)
-        .map((item, currIndex) => (
+        .map(item => (
           <Item
             key={item.id}
             id={item.id}
@@ -36,9 +36,9 @@ class Sidebar extends Component {
             Most Recent Recycled Items
           </h2>
           {mostRecentItems}
-          <a href="#" className="text-success d-block text-center">
+          <Link to="/items" className="text-success d-block text-center">
             See All Items
-          </a>
+          </Link>
         </div>
       );
     } else {

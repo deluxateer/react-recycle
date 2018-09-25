@@ -24,6 +24,7 @@ class App extends Component {
                 <Route exact path="/" component={Dashboard} />
                 <Route exact path="/item/add" component={AddItem} />
                 <Route exact path="/item/edit/:id" component={EditItem} />
+                <Route exact path="/statistics" component={Dashboard} />
               </Switch>
             </div>
             <Footer />

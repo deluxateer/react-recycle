@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chart.js": "^2.7.2",
     "convert-units": "^2.3.4",
     "firebase": "^5.5.1",
     "react": "^16.5.2",

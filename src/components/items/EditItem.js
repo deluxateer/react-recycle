@@ -152,7 +152,8 @@ class EditItem extends Component {
 }
 
 EditItem.propTypes = {
-  firestore: PropTypes.object.isRequired
+  firestore: PropTypes.object.isRequired,
+  item: PropTypes.object
 };
 
 export default compose(

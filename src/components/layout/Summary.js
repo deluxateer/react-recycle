@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
@@ -137,7 +138,12 @@ class Summary extends Component {
           </h1>
           <p className="lead">
             Way to go! Keep up the good work. You can find tips on saving more
-            energy <b>here.</b>
+            energy{" "}
+            <b>
+              <Link to="/tipsfacts" className="text-success">
+                here.
+              </Link>
+            </b>
           </p>
         </div>
         <div className="totalMaterialsGrid">
