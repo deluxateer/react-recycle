@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
-import convert from "convert-units";
 import PropTypes from "prop-types";
 
 import Trivia from "./Trivia";
@@ -12,64 +11,13 @@ import TotalMaterialSaved from "../items/TotalMaterialSaved";
 import { materialsAndAnalogies as totalMaterials } from "../../lib/materialsAndAnalogies";
 
 class Summary extends Component {
-  state = {
-    totalEnergy: 0,
-    totalMaterials
-  };
-
-  static getDerivedStateFromProps(props, state) {
-    const { items } = props;
-    const { totalMaterials } = state;
-
-    if (items) {
-      const totalResourcesSaved = {
-        totalEnergy: 0
-      };
-      // Calculate total resources saved for each material type
-      totalMaterials.forEach(totalMaterial => {
-        // take only elements that match the material you are calcuating for
-        const singleElementItems = items.filter(
-          item => item.material === totalMaterial.type
-        );
-
-        const totalWeight = singleElementItems.reduce((total, item) => {
-          // convert item to user chosen weight unit here
-          // @todo: change to units chosen from user settings
-          const adjustedWeight = convert(item.weight)
-            .from(item.weightUnit)
-            .to("oz");
-          return total + parseFloat(adjustedWeight * item.quantity);
-        }, 0);
-
-        // convert to tons for calculating correct ratios
-        const totalTons = convert(totalWeight)
-          .from("oz") //units chosen from user settings
-          .to("t");
-
-        const resourcesSaved = {};
-        totalMaterial.analogies.forEach(
-          analogy =>
-            (resourcesSaved[analogy.name] = parseFloat(
-              totalTons * analogy.perTon
-            ))
-        );
-        resourcesSaved["totalWeight"] = totalWeight;
-        resourcesSaved["totalWeightUnit"] = "oz";
-
-        totalResourcesSaved[totalMaterial.type] = resourcesSaved;
-        totalResourcesSaved.totalEnergy += resourcesSaved.energy;
-      });
-
-      return {
-        ...totalResourcesSaved
-      };
-    }
-
-    return null;
-  }
+  state = { totalMaterials };
 
   render() {
-    const { totalEnergy, totalMaterials } = this.state;
+    const { totalResources } = this.props;
+    const { totalEnergy } = totalResources;
+    const { totalMaterials } = this.state;
+
     return (
       <React.Fragment>
         <Trivia />
@@ -100,7 +48,7 @@ class Summary extends Component {
               key={i}
               type={material.type}
               analogies={material.analogies}
-              resourcesSaved={this.state[material.type]}
+              resourcesSaved={totalResources[material.type]}
             />
           ))}
         </div>
@@ -117,6 +65,7 @@ Summary.propTypes = {
 export default compose(
   firestoreConnect([{ collection: "items" }]),
   connect((state, props) => ({
-    items: state.firestore.ordered.items
+    items: state.firestore.ordered.items,
+    totalResources: { ...state.totalResourcesSaved.totalResources }
   }))
 )(Summary);

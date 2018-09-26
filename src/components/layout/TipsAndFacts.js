@@ -16,15 +16,22 @@ class TipsAndFacts extends Component {
         </h3>
       );
       tipsAndFactsJSX.push(materialName);
+
       tipsAndFactsJSX.push(<h4 key={`${material}Tips`}>Tips</h4>);
       const materialTips = tipsAndFacts[material].tips.map((tip, currIndex) => (
-        <li key={currIndex}>{tip}</li>
+        <li className="my-2" key={currIndex}>
+          {tip}
+        </li>
       ));
       tipsAndFactsJSX.push(<ul key={`${material}TipsList`}>{materialTips}</ul>);
 
       tipsAndFactsJSX.push(<h4 key={`${material}Facts`}>Facts</h4>);
       const materialFacts = tipsAndFacts[material].facts.map(
-        (fact, currIndex) => <li key={currIndex}>{fact}</li>
+        (fact, currIndex) => (
+          <li className="my-2" key={currIndex}>
+            {fact}
+          </li>
+        )
       );
       tipsAndFactsJSX.push(
         <ul key={`${material}FactsList`}>{materialFacts}</ul>
