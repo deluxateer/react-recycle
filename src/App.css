@@ -57,6 +57,16 @@ Sidebar
   grid-gap: 1em;
 }
 
+/* ---------------
+  Items
+  ------------------*/
+
+.items-group {
+  display: grid;
+  grid-gap: 1em;
+  margin: 20px 0 40px;
+}
+
 /* ---------------------------------
 MEDIA QUERIES
 ------------------------------------*/
@@ -77,8 +87,23 @@ MEDIA QUERIES
   .totalMaterialsGrid {
     grid-template-columns: 1fr 1fr;
   }
+
+  /* ---------------
+  Items
+  ------------------*/
+
+  .items-group {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+  /* ---------------
+  Items
+  ------------------*/
+
+  .items-group {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

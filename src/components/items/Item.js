@@ -54,7 +54,27 @@ class Item extends Component {
       steel
     };
 
-    const { id, itemName, material, weight, weightUnit, quantity } = this.props;
+    const {
+      id,
+      itemName,
+      material,
+      weight,
+      weightUnit,
+      quantity,
+      timeStamp
+    } = this.props;
+
+    let creationDate = timeStamp.toDate();
+    creationDate =
+      creationDate.getMonth() +
+      1 +
+      "/" +
+      creationDate.getDate() +
+      "/" +
+      creationDate
+        .getFullYear()
+        .toString()
+        .slice(2);
 
     return (
       <div className="item-card card">
@@ -71,77 +91,80 @@ class Item extends Component {
                 {material}, Qty. {quantity}
               </h6>
             </div>
-            <div className="d-flex">
-              <Link
-                className="d-flex text-success"
-                to={`/item/edit/${id}`}
-                style={{ textDecoration: "none" }}
-              >
-                <i className="fas fa-pencil-alt" />
-              </Link>
-              <button
-                className="btn btn-link position-relative p-0 ml-3 mr-1"
-                type="button"
-                data-toggle="modal"
-                data-target={`#deleteModal${id.substring(0, 5)}`}
-              >
-                <i
-                  className="fas fa-times position-absolute text-danger"
-                  style={{ top: 0 }}
-                />
-              </button>
-              {/* Delete Modal */}
-              <div
-                className="modal fade"
-                id={`deleteModal${id.substring(0, 5)}`}
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby={`deleteModalLabel${id.substring(0, 5)}`}
-                aria-hidden="true"
-              >
-                <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5
-                        className="modal-title"
-                        id={`deleteModalLabel${id.substring(0, 5)}`}
-                      >
-                        Warning
-                      </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div className="modal-body">
-                      Are you sure you want to delete this item? This process is
-                      irreversible.
-                    </div>
-                    <div className="modal-footer">
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        data-dismiss="modal"
-                      >
-                        No
-                      </button>
-                      <button
-                        type="button"
-                        onClick={this.onDeleteClick}
-                        className="btn btn-danger"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        Yes, I'm sure
-                      </button>
+            <div className="d-flex flex-column">
+              <div className="d-flex">
+                <Link
+                  className="d-flex text-success"
+                  to={`/item/edit/${id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <i className="fas fa-pencil-alt" />
+                </Link>
+                <button
+                  className="btn btn-link position-relative p-0 ml-3 mr-1"
+                  type="button"
+                  data-toggle="modal"
+                  data-target={`#deleteModal${id.substring(0, 5)}`}
+                >
+                  <i
+                    className="fas fa-times position-absolute text-danger"
+                    style={{ top: 0 }}
+                  />
+                </button>
+                {/* Delete Modal */}
+                <div
+                  className="modal fade"
+                  id={`deleteModal${id.substring(0, 5)}`}
+                  tabIndex="-1"
+                  role="dialog"
+                  aria-labelledby={`deleteModalLabel${id.substring(0, 5)}`}
+                  aria-hidden="true"
+                >
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5
+                          className="modal-title"
+                          id={`deleteModalLabel${id.substring(0, 5)}`}
+                        >
+                          Warning
+                        </h5>
+                        <button
+                          type="button"
+                          className="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body">
+                        Are you sure you want to delete this item? This process
+                        is irreversible.
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="btn btn-secondary"
+                          data-dismiss="modal"
+                        >
+                          No
+                        </button>
+                        <button
+                          type="button"
+                          onClick={this.onDeleteClick}
+                          className="btn btn-danger"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          Yes, I'm sure
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div className="mt-2">{creationDate}</div>
             </div>
           </div>
           <div className="d-flex justify-content-between">

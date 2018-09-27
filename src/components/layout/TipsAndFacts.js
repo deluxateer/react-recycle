@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
+import { tipsAndFactsSource } from "../../lib/tipsAndFacts";
 
 class TipsAndFacts extends Component {
   render() {
-    const { tipsAndFacts } = this.props;
+    const tipsAndFacts = { ...tipsAndFactsSource };
     // get source link
     const sourceLink = tipsAndFacts.source;
     delete tipsAndFacts["source"];
@@ -40,19 +41,22 @@ class TipsAndFacts extends Component {
 
     return (
       <div className="tipsAndFacts">
-        <h2 className="mb-4">Tips And Facts</h2>
-        {tipsAndFactsJSX}
-        <p className="text-secondary mt-3">
-          Source for this information can be found{" "}
-          <a className="text-success" target="_blank" href={sourceLink}>
-            here.
-          </a>
-        </p>
+        <div className="container">
+          <h2 className="mb-4">Tips And Facts</h2>
+          {tipsAndFactsJSX}
+          <p className="text-secondary mt-3">
+            Source for this information can be found{" "}
+            <a className="text-success" target="_blank" href={sourceLink}>
+              here.
+            </a>
+          </p>
+        </div>
       </div>
     );
   }
 }
 
-export default connect((state, props) => ({
-  tipsAndFacts: state.tipsAndFacts.tipsAndFacts
-}))(TipsAndFacts);
+// export default connect((state, props) => ({
+//   tipsAndFacts: state.tipsAndFacts.tipsAndFacts
+// }))(TipsAndFacts);
+export default TipsAndFacts;

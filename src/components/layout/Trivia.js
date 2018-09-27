@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
+import { tipsAndFactsSource } from "../../lib/tipsAndFacts";
 
 class Trivia extends Component {
   render() {
-    const { tipsAndFacts } = this.props;
+    const tipsAndFacts = { ...tipsAndFactsSource };
     delete tipsAndFacts["source"];
 
     const allFacts = [];
@@ -33,6 +34,7 @@ class Trivia extends Component {
   }
 }
 
-export default connect((state, props) => ({
-  tipsAndFacts: state.tipsAndFacts.tipsAndFacts
-}))(Trivia);
+// export default connect((state, props) => ({
+//   tipsAndFacts: state.tipsAndFacts.tipsAndFacts
+// }))(Trivia);
+export default Trivia;

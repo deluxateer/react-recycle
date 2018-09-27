@@ -27,6 +27,7 @@ class Sidebar extends Component {
             weight={item.weight}
             weightUnit={item.weightUnit}
             quantity={item.quantity}
+            timeStamp={item.creationTimestamp}
           />
         ));
 
@@ -36,9 +37,18 @@ class Sidebar extends Component {
             Most Recent Recycled Items
           </h2>
           {mostRecentItems}
-          <Link to="/items" className="text-success d-block text-center">
-            See All Items
-          </Link>
+          {items.length > 0 ? (
+            <Link to="/items" className="text-success d-block text-center">
+              See All Items
+            </Link>
+          ) : (
+            <p className="d-block text-center">
+              You don't have any items.{" "}
+              <Link to="/item/add" className="text-success">
+                Try adding some!
+              </Link>
+            </p>
+          )}
         </div>
       );
     } else {

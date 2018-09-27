@@ -1,4 +1,4 @@
-export const tipsAndFacts = {
+export const tipsAndFactsSource = {
   aluminum: {
     tips: [
       "Prepare aluminum cans for recycling by either crushing the cans to save space or leaving them uncrushed.",

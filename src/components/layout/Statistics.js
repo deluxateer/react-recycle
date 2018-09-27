@@ -59,7 +59,7 @@ class Statistics extends Component {
           labels: Object.keys(totalResources),
           datasets: [
             {
-              label: "Recycled Amount vs. Material",
+              label: "Recycled Amount",
               backgroundColor: [
                 "red", // color for data at index 0
                 "blue", // color for data at index 1
@@ -76,11 +76,30 @@ class Statistics extends Component {
         // Configuration options go here
         options: {
           events: ["mousemove"],
+          maintainAspectRatio: false,
+          title: {
+            display: true,
+            text: "Recycled Amount vs. Material"
+          },
+          tooltips: {
+            callbacks: {
+              label: function(tooltipItem, data) {
+                let labelValue =
+                  data.datasets[tooltipItem.datasetIndex].data[
+                    tooltipItem.index
+                  ] || "";
+                if (labelValue) {
+                  labelValue = parseFloat(labelValue).toFixed(2);
+                }
+
+                return `${labelValue} oz`;
+              }
+            }
+          },
           scales: this.state.graphType === "bar" && {
             yAxes: [
               {
                 ticks: {
-                  // Include a dollar sign in the ticks
                   callback: function(value, index, values) {
                     return `${value} oz`;
                   }
@@ -152,7 +171,12 @@ class Statistics extends Component {
         <p className="text-center my-3">
           Rendering Duration: <b>{this.state.displayDuration}</b>
         </p>
-        <canvas id="chart" />
+        <div
+          className="chart-container"
+          style={{ position: "relative", minHeight: "300px" }}
+        >
+          <canvas id="chart" />
+        </div>
         <div className="chart-types d-flex justify-content-around mt-3 mb-2">
           <button
             onClick={this.chooseGraphType}
@@ -175,6 +199,10 @@ class Statistics extends Component {
           The Pie chart emphasizes the composition of your recycled materials.
         </p>
         <p>The Bar chart emphasizes the quantity of your recycled materials.</p>
+        <p>
+          <b>Note:</b> Hover over the chart to see exact values, or tap on it if
+          viewing from a mobile device.
+        </p>
       </div>
     );
   }
