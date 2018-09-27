@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
-import { calculateResources } from "../../actions/calculateResourcesAction";
+// import { calculateResources } from "../../actions/calculateResourcesAction";
 
 class AppNavbar extends Component {
-  componentDidUpdate() {
-    const { items } = this.props;
-    if (items) {
-      const { calculateResources } = this.props;
-      calculateResources(items);
-    }
-  }
+  // componentDidUpdate() {
+  //   const { items } = this.props;
+  //   if (items) {
+  //     const { calculateResources } = this.props;
+  //     calculateResources(items);
+  //   }
+  // }
 
   render() {
     return (
@@ -99,7 +99,7 @@ export default compose(
   connect(
     (state, props) => ({
       items: state.firestore.ordered.items
-    }),
-    { calculateResources }
+    })
+    // { calculateResources }
   )
 )(AppNavbar);

@@ -9,12 +9,14 @@ import Trivia from "./Trivia";
 import TotalMaterialSaved from "../items/TotalMaterialSaved";
 
 import { materialsAndAnalogies as totalMaterials } from "../../lib/materialsAndAnalogies";
+import { calculateResources } from "../../lib/calculateResources";
 
 class Summary extends Component {
   state = { totalMaterials };
 
   render() {
-    const { totalResources } = this.props;
+    // const { totalResources } = this.props;
+    const totalResources = calculateResources(this.props.items);
     const { totalEnergy } = totalResources;
     const { totalMaterials } = this.state;
 
@@ -65,7 +67,7 @@ Summary.propTypes = {
 export default compose(
   firestoreConnect([{ collection: "items" }]),
   connect((state, props) => ({
-    items: state.firestore.ordered.items,
-    totalResources: { ...state.totalResourcesSaved.totalResources }
+    items: state.firestore.ordered.items
+    // totalResources: { ...state.totalResourcesSaved.totalResources }
   }))
 )(Summary);

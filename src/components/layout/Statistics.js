@@ -5,54 +5,171 @@ import { firestoreConnect } from "react-redux-firebase";
 // import convert from "convert-units";
 import Chart from "chart.js";
 import PropTypes from "prop-types";
+import { calculateResources } from "../../lib/calculateResources";
 
 class Statistics extends Component {
-  componentDidMount() {
-    let ctx = document.getElementById("chart").getContext("2d");
-    let chart = new Chart(ctx, {
-      // The type of chart we want to create
-      type: "line",
+  state = {
+    displayDuration: "Weekly",
+    graphType: "pie"
+  };
 
-      // The data for our dataset
-      data: {
-        labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July"
-        ],
-        datasets: [
-          {
-            label: "My First dataset",
-            backgroundColor: "rgb(255, 99, 132)",
-            borderColor: "rgb(255, 99, 132)",
-            data: [0, 10, 5, 2, 20, 30, 45]
+  renderChart = () => {
+    const { items, firestore } = this.props;
+    const { Timestamp } = firestore;
+
+    // filter and keep the most recent items by this week/month/year
+    let timeFilter = new Date();
+    switch (this.state.displayDuration) {
+      case "Weekly":
+        timeFilter.setDate(timeFilter.getDate() - 7);
+        break;
+      case "Monthly":
+        timeFilter.setMonth(timeFilter.getMonth() - 1);
+        break;
+      case "Yearly":
+        timeFilter.setFullYear(timeFilter.getFullYear() - 1);
+        break;
+      // Lifetime by default
+      default:
+        timeFilter = new Date(0);
+        break;
+    }
+
+    const filteredItems = items.filter(
+      item =>
+        item.creationTimestamp.seconds > Timestamp.fromDate(timeFilter).seconds
+    );
+
+    const totalResources = calculateResources(filteredItems);
+
+    if (totalResources) {
+      // prepare data by removing totalEnergy and extracting totalWeights
+      // recycled for each material
+      delete totalResources["totalEnergy"];
+      const amountsSaved = Object.values(totalResources);
+      const weightsRecycled = amountsSaved.map(amount => amount.totalWeight);
+
+      let ctx = document.getElementById("chart").getContext("2d");
+      let chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: this.state.graphType,
+
+        // The data for our dataset
+        data: {
+          labels: Object.keys(totalResources),
+          datasets: [
+            {
+              label: "Recycled Amount vs. Material",
+              backgroundColor: [
+                "red", // color for data at index 0
+                "blue", // color for data at index 1
+                "green", // color for data at index 2
+                "black", // color for data at index 3
+                "yellow", // color for data at index 4
+                "brown" // color for data at index 5
+              ],
+              data: weightsRecycled
+            }
+          ]
+        },
+
+        // Configuration options go here
+        options: {
+          events: ["mousemove"],
+          scales: this.state.graphType === "bar" && {
+            yAxes: [
+              {
+                ticks: {
+                  // Include a dollar sign in the ticks
+                  callback: function(value, index, values) {
+                    return `${value} oz`;
+                  }
+                },
+                scaleLabel: {
+                  labelString: "Hello"
+                }
+              }
+            ]
           }
-        ]
-      },
+        }
+      });
+    }
+  };
 
-      // Configuration options go here
-      options: {}
-    });
-    // console.log(chart);
-    // console.log(this.props.items);
+  chooseGraphType = e => {
+    this.setState({ [e.target.name]: e.target.value });
+
+    // remove hover event handlers on chart by cloning it and removing old one
+    const oldChart = document.getElementById("chart");
+    const newChart = oldChart.cloneNode(true);
+    oldChart.parentNode.replaceChild(newChart, oldChart);
+  };
+
+  componentDidMount() {
+    this.renderChart();
+  }
+  componentDidUpdate() {
+    this.renderChart();
   }
 
   render() {
     return (
       <div id="statistics">
         <div className="time-denominations d-flex justify-content-around mb-3">
-          <button className="btn btn-success">Weekly</button>
-          <button className="btn btn-success">Monthly</button>
-          <button className="btn btn-success">Yearly</button>
+          <button
+            name="displayDuration"
+            value="Weekly"
+            onClick={this.chooseGraphType}
+            className="btn btn-success"
+          >
+            Weekly
+          </button>
+          <button
+            name="displayDuration"
+            value="Monthly"
+            onClick={this.chooseGraphType}
+            className="btn btn-success"
+          >
+            Monthly
+          </button>
+          <button
+            name="displayDuration"
+            value="Yearly"
+            onClick={this.chooseGraphType}
+            className="btn btn-success"
+          >
+            Yearly
+          </button>
+          <button
+            name="displayDuration"
+            value="Lifetime"
+            onClick={this.chooseGraphType}
+            className="btn btn-success"
+          >
+            Lifetime
+          </button>
         </div>
+        <p className="text-center my-3">
+          Rendering Duration: <b>{this.state.displayDuration}</b>
+        </p>
         <canvas id="chart" />
         <div className="chart-types d-flex justify-content-around mt-3 mb-2">
-          <button className="btn btn-success">Pie</button>
-          <button className="btn btn-success">Bar</button>
+          <button
+            onClick={this.chooseGraphType}
+            name="graphType"
+            value="pie"
+            className="btn btn-success"
+          >
+            Pie
+          </button>
+          <button
+            onClick={this.chooseGraphType}
+            name="graphType"
+            value="bar"
+            className="btn btn-success"
+          >
+            Bar
+          </button>
         </div>
         <p>
           The Pie chart emphasizes the composition of your recycled materials.
@@ -72,5 +189,6 @@ export default compose(
   firestoreConnect([{ collection: "items" }]),
   connect((state, props) => ({
     items: state.firestore.ordered.items
+    // totalResources: { ...state.totalResourcesSaved.totalResources }
   }))
 )(Statistics);

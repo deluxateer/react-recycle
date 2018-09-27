@@ -40,7 +40,7 @@ class AddItem extends Component {
 
     firestore
       .add({ collection: "items" }, newItem)
-      .then(() => history.push("/"));
+      .then(() => history.goBack());
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
