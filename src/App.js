@@ -12,6 +12,8 @@ import Items from "./components/items/Items";
 import AddItem from "./components/items/AddItem";
 import EditItem from "./components/items/EditItem";
 
+import Login from "./components/auth/Login";
+
 import "./App.css";
 
 class App extends Component {
@@ -29,6 +31,7 @@ class App extends Component {
                 <Route exact path="/items" component={Items} />
                 <Route exact path="/item/add" component={AddItem} />
                 <Route exact path="/item/edit/:id" component={EditItem} />
+                <Route exact path="/login" component={Login} />
               </Switch>
             </div>
             <Footer />
