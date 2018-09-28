@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-// import { compose } from "redux";
-// import { connect } from "react-redux";
+import { compose } from "redux";
+import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
+import { notifyUser } from "../../actions/notifyActions";
+import Alert from "../layout/Alert";
 
 class AddItem extends Component {
   state = {
@@ -14,22 +16,27 @@ class AddItem extends Component {
     weightUnit: ""
   };
 
-  // checkWeight = weightInput => {
-  //   display warning if inputed weight is zero
-
-  //   if (weightInput.value == 0) {
-  //     // weightInput.setCustomValidity("Weight must not be zero.");
-  //   } else {
-  //     // input is fine -- reset the error message
-  //     // weightInput.setCustomValidity("");
-  //   }
-  // };
+  componentDidMount() {
+    // clear error message if it persisted from before
+    this.props.notifyUser(null, null);
+  }
 
   onSubmit = e => {
     e.preventDefault();
 
     const { state } = this;
-    const { firestore, history } = this.props;
+    const { firestore, history, notifyUser } = this.props;
+
+    // reject input if weight = 0
+    if (parseFloat(state.weight) === 0) {
+      notifyUser("You cannot enter a weight value of zero.", "error");
+      return;
+    }
+    // reject input if weight is not a number
+    if (isNaN(state.weight)) {
+      notifyUser("You must enter a number for weight", "error");
+      return;
+    }
 
     const newItem = {
       ...state,
@@ -46,6 +53,8 @@ class AddItem extends Component {
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
+    const { message, messageType } = this.props.notify;
+
     return (
       <div>
         <div className="row">
@@ -58,6 +67,9 @@ class AddItem extends Component {
         <div className="card">
           <div className="card-header">Add Item</div>
           <div className="card-body">
+            {message ? (
+              <Alert message={message} messageType={messageType} />
+            ) : null}
             <form onSubmit={this.onSubmit}>
               <div className="form-group">
                 <label htmlFor="itemName">Item Name</label>
@@ -80,7 +92,7 @@ class AddItem extends Component {
                   onChange={this.onChange}
                   value={this.state.material}
                 >
-                  <option defaultValue>Choose a Material</option>
+                  <option value="">Choose a Material</option>
                   <option value="Aluminum">Aluminum</option>
                   <option value="Cardboard">Cardboard</option>
                   <option value="Glass">Glass</option>
@@ -104,12 +116,11 @@ class AddItem extends Component {
               <div className="form-group">
                 <label htmlFor="weight">Weight Per Quantity</label>
                 <input
-                  type="number"
+                  type="text"
                   className="form-control"
                   name="weight"
                   required
                   onChange={this.onChange}
-                  onInput={this.checkWeight}
                   value={this.state.weight}
                 />
               </div>
@@ -122,7 +133,7 @@ class AddItem extends Component {
                   onChange={this.onChange}
                   value={this.state.weightUnit}
                 >
-                  <option defaultValue>Choose a Unit</option>
+                  <option value="">Choose a Unit</option>
                   <option value="g">Grams (g)</option>
                   <option value="kg">Kilograms (kg)</option>
                   <option value="oz">Ounces (oz)</option>
@@ -143,14 +154,19 @@ class AddItem extends Component {
 }
 
 AddItem.propTypes = {
-  firestore: PropTypes.object.isRequired
+  firestore: PropTypes.object.isRequired,
+  notify: PropTypes.object.isRequired,
+  notifyUser: PropTypes.func.isRequired
   // settings: PropTypes.object.isRequired
 };
 
-// export default compose(
-//   firestoreConnect(),
-//   connect((state, props) => ({
-//     settings: state.settings
-//   }))
-// )(AddItem);
-export default firestoreConnect()(AddItem);
+export default compose(
+  firestoreConnect(),
+  connect(
+    (state, props) => ({
+      notify: state.notify
+      // settings: state.settings
+    }),
+    { notifyUser }
+  )
+)(AddItem);

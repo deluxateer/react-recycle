@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
+import { notifyUser } from "../../actions/notifyActions";
+import Alert from "../layout/Alert";
 import Spinner from "../layout/Spinner";
 
 class EditItem extends Component {
@@ -17,20 +19,27 @@ class EditItem extends Component {
     this.weightUnitInput = React.createRef();
   }
 
-  // checkWeight = weightInput => {
-  //   display warning if inputed weight is zero
-
-  //   if (weightInput.value == 0) {
-  //     // weightInput.setCustomValidity("Weight must not be zero.");
-  //   } else {
-  //     // input is fine -- reset the error message
-  //     // weightInput.setCustomValidity("");
-  //   }
-  // };
+  componentDidMount() {
+    // clear error message if it persisted from before
+    this.props.notifyUser(null, null);
+  }
 
   // Updates Item
   onSubmit = e => {
     e.preventDefault();
+
+    const { firestore, item, history, notifyUser } = this.props;
+
+    // reject input if weight = 0
+    if (parseFloat(this.weightInput.current.value) === 0) {
+      notifyUser("You cannot enter a weight value of zero.", "error");
+      return;
+    }
+    // reject input if weight is not a number
+    if (isNaN(this.weightInput.current.value)) {
+      notifyUser("You must enter a number for weight", "error");
+      return;
+    }
 
     const updatedItem = {
       itemName: this.itemNameInput.current.value,
@@ -40,8 +49,6 @@ class EditItem extends Component {
       weightUnit: this.weightUnitInput.current.value
     };
 
-    const { firestore, item, history } = this.props;
-
     firestore
       .update({ collection: "items", doc: item.id }, updatedItem)
       .then(() => history.goBack());
@@ -49,6 +56,7 @@ class EditItem extends Component {
 
   render() {
     const { item } = this.props;
+    const { message, messageType } = this.props.notify;
 
     if (item) {
       return (
@@ -63,6 +71,9 @@ class EditItem extends Component {
           <div className="card">
             <div className="card-header">Edit Item</div>
             <div className="card-body">
+              {message ? (
+                <Alert message={message} messageType={messageType} />
+              ) : null}
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <label htmlFor="itemName">Item Name</label>
@@ -85,7 +96,7 @@ class EditItem extends Component {
                     defaultValue={item.material}
                     ref={this.materialInput}
                   >
-                    <option defaultValue>Choose a Material</option>
+                    <option value="">Choose a Material</option>
                     <option value="Aluminum">Aluminum</option>
                     <option value="Cardboard">Cardboard</option>
                     <option value="Glass">Glass</option>
@@ -109,12 +120,10 @@ class EditItem extends Component {
                 <div className="form-group">
                   <label htmlFor="weight">Weight Per Quantity</label>
                   <input
-                    type="number"
+                    type="text"
                     className="form-control"
                     name="weight"
                     required
-                    // min="0"
-                    // onInput={this.checkWeight}
                     defaultValue={item.weight}
                     ref={this.weightInput}
                   />
@@ -128,7 +137,7 @@ class EditItem extends Component {
                     defaultValue={item.weightUnit}
                     ref={this.weightUnitInput}
                   >
-                    <option defaultValue>Choose a Unit</option>
+                    <option value="">Choose a Unit</option>
                     <option value="g">Grams (g)</option>
                     <option value="kg">Kilograms (kg)</option>
                     <option value="oz">Ounces (oz)</option>
@@ -153,14 +162,20 @@ class EditItem extends Component {
 
 EditItem.propTypes = {
   firestore: PropTypes.object.isRequired,
-  item: PropTypes.object
+  item: PropTypes.object,
+  notify: PropTypes.object.isRequired,
+  notifyUser: PropTypes.func.isRequired
 };
 
 export default compose(
   firestoreConnect(props => [
     { collection: "items", doc: props.match.params.id, storeAs: "item" }
   ]),
-  connect(({ firestore: { ordered } }, props) => ({
-    item: ordered.item && ordered.item[0]
-  }))
+  connect(
+    ({ firestore: { ordered }, notify }, props) => ({
+      item: ordered.item && ordered.item[0],
+      notify
+    }),
+    { notifyUser }
+  )
 )(EditItem);
