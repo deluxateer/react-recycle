@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { UserIsAuthenticated, UserIsNotAuthenticated } from "./lib/auth";
 
 import { Provider } from "react-redux";
 import store from "./store";
@@ -25,13 +26,41 @@ class App extends Component {
             <AppNavbar />
             <div className="container">
               <Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route exact path="/statistics" component={Dashboard} />
-                <Route exact path="/tipsfacts" component={TipsAndFacts} />
-                <Route exact path="/items" component={Items} />
-                <Route exact path="/item/add" component={AddItem} />
-                <Route exact path="/item/edit/:id" component={EditItem} />
-                <Route exact path="/login" component={Login} />
+                <Route
+                  exact
+                  path="/"
+                  component={UserIsAuthenticated(Dashboard)}
+                />
+                <Route
+                  exact
+                  path="/statistics"
+                  component={UserIsAuthenticated(Dashboard)}
+                />
+                <Route
+                  exact
+                  path="/tipsfacts"
+                  component={UserIsAuthenticated(TipsAndFacts)}
+                />
+                <Route
+                  exact
+                  path="/items"
+                  component={UserIsAuthenticated(Items)}
+                />
+                <Route
+                  exact
+                  path="/item/add"
+                  component={UserIsAuthenticated(AddItem)}
+                />
+                <Route
+                  exact
+                  path="/item/edit/:id"
+                  component={UserIsAuthenticated(EditItem)}
+                />
+                <Route
+                  exact
+                  path="/login"
+                  component={UserIsNotAuthenticated(Login)}
+                />
               </Switch>
             </div>
             <Footer />
