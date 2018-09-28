@@ -15,9 +15,9 @@ class Items extends Component {
   setSortType = e => {
     this.setState({ sortType: e.target.value });
   };
+
   sortFunction = () => {
     switch (this.state.sortType) {
-      // default: mostRecent
       case "oldest":
         return (a, b) =>
           a.creationTimestamp.seconds - b.creationTimestamp.seconds;
@@ -35,6 +35,7 @@ class Items extends Component {
         };
       case "highestQuantity":
         return (a, b) => b.quantity - a.quantity;
+      // default: mostRecent
       default:
         return (a, b) =>
           b.creationTimestamp.seconds - a.creationTimestamp.seconds;
@@ -44,7 +45,7 @@ class Items extends Component {
   render() {
     const { items } = this.props;
     if (items) {
-      const mostRecentItems = items
+      const sortedItems = items
         .sort(this.sortFunction())
         .map(item => (
           <Item
@@ -55,7 +56,7 @@ class Items extends Component {
             weight={item.weight}
             weightUnit={item.weightUnit}
             quantity={item.quantity}
-            timeStamp={item.creationTimestamp}
+            creationTimestamp={item.creationTimestamp}
           />
         ));
 
@@ -77,32 +78,18 @@ class Items extends Component {
                 <option value="highestQuantity">Highest Quantity</option>
               </select>
             </div>
-            <div className="items-group">{mostRecentItems}</div>
+            <div className="items-group">{sortedItems}</div>
           </div>
         </div>
       );
     } else {
-      return (
-        <div style={{ minHeight: "350px", height: "90vh" }}>
-          <Spinner />
-        </div>
-      );
+      return <Spinner />;
     }
   }
 }
 
 export default compose(
-  firestoreConnect(props => [
-    {
-      collection: "items"
-      // Bugs with this package: orderBy doesn't work on its own, rerendering
-      // a page with this sidebar after another previous query mutates
-      // the Redux state.
-
-      // orderBy: ["creationTimestamp", "desc"],
-      // limit: 5
-    }
-  ]),
+  firestoreConnect([{ collection: "items" }]),
   connect((state, props) => ({
     items: state.firestore.ordered.items
   }))

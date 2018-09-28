@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { connect } from "react-redux";
 import { tipsAndFactsSource } from "../../lib/tipsAndFacts";
 
 class Trivia extends Component {
@@ -34,7 +33,4 @@ class Trivia extends Component {
   }
 }
 
-// export default connect((state, props) => ({
-//   tipsAndFacts: state.tipsAndFacts.tipsAndFacts
-// }))(Trivia);
 export default Trivia;

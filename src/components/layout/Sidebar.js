@@ -27,7 +27,7 @@ class Sidebar extends Component {
             weight={item.weight}
             weightUnit={item.weightUnit}
             quantity={item.quantity}
-            timeStamp={item.creationTimestamp}
+            creationTimestamp={item.creationTimestamp}
           />
         ));
 
@@ -63,17 +63,7 @@ Sidebar.propTypes = {
 };
 
 export default compose(
-  firestoreConnect(props => [
-    {
-      collection: "items"
-      // Bugs with this package: orderBy doesn't work on its own, rerendering
-      // a page with this sidebar after another previous query mutates
-      // the Redux state.
-
-      // orderBy: ["creationTimestamp", "desc"],
-      // limit: 5
-    }
-  ]),
+  firestoreConnect([{ collection: "items" }]),
   connect((state, props) => ({
     items: state.firestore.ordered.items
   }))

@@ -118,7 +118,7 @@ class Statistics extends Component {
   chooseGraphType = e => {
     this.setState({ [e.target.name]: e.target.value });
 
-    // remove hover event handlers on chart by cloning it and removing old one
+    // reset all event handlers (ie hover) on chart by cloning it and removing old one
     const oldChart = document.getElementById("chart");
     const newChart = oldChart.cloneNode(true);
     oldChart.parentNode.replaceChild(newChart, oldChart);
@@ -217,6 +217,5 @@ export default compose(
   firestoreConnect([{ collection: "items" }]),
   connect((state, props) => ({
     items: state.firestore.ordered.items
-    // totalResources: { ...state.totalResourcesSaved.totalResources }
   }))
 )(Statistics);

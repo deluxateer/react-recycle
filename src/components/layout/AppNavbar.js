@@ -29,6 +29,7 @@ class AppNavbar extends Component {
 
   render() {
     const { isAuthenticated } = this.state;
+    const { auth } = this.props;
 
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-success mb-4">
@@ -87,7 +88,7 @@ class AppNavbar extends Component {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      name@gmail.com
+                      {auth.email}
                     </a>
                     <div
                       className="dropdown-menu bg-success"

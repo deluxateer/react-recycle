@@ -15,7 +15,6 @@ class Summary extends Component {
   state = { totalMaterials };
 
   render() {
-    // const { totalResources } = this.props;
     const totalResources = calculateResources(this.props.items);
     const { totalEnergy } = totalResources;
     const { totalMaterials } = this.state;
@@ -68,6 +67,5 @@ export default compose(
   firestoreConnect([{ collection: "items" }]),
   connect((state, props) => ({
     items: state.firestore.ordered.items
-    // totalResources: { ...state.totalResourcesSaved.totalResources }
   }))
 )(Summary);

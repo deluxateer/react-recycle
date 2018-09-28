@@ -61,10 +61,11 @@ class Item extends Component {
       weight,
       weightUnit,
       quantity,
-      timeStamp
+      creationTimestamp
     } = this.props;
 
-    let creationDate = timeStamp.toDate();
+    let creationDate = creationTimestamp.toDate();
+    // converts Date into MM/DD/YY format
     creationDate =
       creationDate.getMonth() +
       1 +
@@ -192,6 +193,7 @@ Item.propTypes = {
   weight: PropTypes.number.isRequired,
   weightUnit: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
+  creationTimestamp: PropTypes.object.isRequired,
   firestore: PropTypes.object.isRequired
 };
 

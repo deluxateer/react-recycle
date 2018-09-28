@@ -29,11 +29,7 @@ class Dashboard extends Component {
         </div>
       );
     } else {
-      return (
-        <div style={{ minHeight: "350px", height: "90vh" }}>
-          <Spinner />
-        </div>
-      );
+      return <Spinner />;
     }
   }
 }
