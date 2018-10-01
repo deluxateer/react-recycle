@@ -15,6 +15,7 @@ import EditItem from "./components/items/EditItem";
 
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
+import Settings from "./components/settings/Settings";
 
 import "./App.css";
 
@@ -56,6 +57,11 @@ class App extends Component {
                   exact
                   path="/item/edit/:id"
                   component={UserIsAuthenticated(EditItem)}
+                />
+                <Route
+                  exact
+                  path="/settings"
+                  component={UserIsAuthenticated(Settings)}
                 />
                 <Route
                   exact
