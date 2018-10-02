@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
+import PropTypes from "prop-types";
 
 import Trivia from "../layout/Trivia";
 import Item from "./Item";
@@ -12,9 +14,7 @@ class Items extends Component {
     sortType: "mostRecent"
   };
 
-  setSortType = e => {
-    this.setState({ sortType: e.target.value });
-  };
+  setSortType = e => this.setState({ sortType: e.target.value });
 
   sortFunction = () => {
     switch (this.state.sortType) {
@@ -44,6 +44,8 @@ class Items extends Component {
 
   render() {
     const { items, showTrivia } = this.props;
+    console.log(items);
+
     if (items) {
       const sortedItems = items
         .sort(this.sortFunction())
@@ -65,20 +67,29 @@ class Items extends Component {
           <div className="container">
             {showTrivia ? <Trivia /> : null}
             <h2>Recycled Items History</h2>
-            <div className="d-flex justify-content-center mt-3">
-              <h3>Sort By: </h3>
-              <select
-                onChange={this.setSortType}
-                className="custom-select w-50 ml-3"
-              >
-                <option value="mostRecent">Most Recently Added</option>
-                <option value="oldest">Oldest</option>
-                <option value="materials">Materials</option>
-                <option value="highestWeight">Highest Total Weight</option>
-                <option value="highestQuantity">Highest Quantity</option>
-              </select>
-            </div>
-            <div className="items-group">{sortedItems}</div>
+            {items.length > 0 ? (
+              <React.Fragment>
+                <div className="d-flex justify-content-center mt-3">
+                  <h3>Sort By: </h3>
+                  <select
+                    onChange={this.setSortType}
+                    className="custom-select w-50 ml-3"
+                  >
+                    <option value="mostRecent">Most Recently Added</option>
+                    <option value="oldest">Oldest</option>
+                    <option value="materials">Materials</option>
+                    <option value="highestWeight">Highest Total Weight</option>
+                    <option value="highestQuantity">Highest Quantity</option>
+                  </select>
+                </div>
+                <div className="items-group">{sortedItems}</div>
+              </React.Fragment>
+            ) : (
+              <p>
+                You don't have any items yet. Try{" "}
+                <Link to="/item/add">adding some!</Link>
+              </p>
+            )}
           </div>
         </div>
       );
@@ -87,6 +98,12 @@ class Items extends Component {
     }
   }
 }
+
+Items.propTypes = {
+  firestore: PropTypes.object.isRequired,
+  items: PropTypes.array,
+  showTrivia: PropTypes.bool.isRequired
+};
 
 export default compose(
   firestoreConnect([{ collection: "items" }]),

@@ -5,6 +5,7 @@ export function calculateResources(items, settings) {
   const totalResourcesSaved = {
     totalEnergy: 0
   };
+
   // Calculate total resources saved for each material type
   totalMaterials.forEach(totalMaterial => {
     // take only elements that match the material you are calcuating for
@@ -17,6 +18,8 @@ export function calculateResources(items, settings) {
       const adjustedWeight = convert(item.weight)
         .from(item.weightUnit)
         .to(settings.displayWeightUnit);
+      // get the subtotal weight by multiplying the weight per quantity
+      // by the total quantity
       return total + parseFloat(adjustedWeight * item.quantity);
     }, 0);
 
@@ -26,6 +29,7 @@ export function calculateResources(items, settings) {
       .to("t");
 
     const resourcesSaved = {};
+    // calculate the amounts saved for each analogy of the current material
     totalMaterial.analogies.forEach(
       analogy =>
         (resourcesSaved[analogy.name] = parseFloat(totalTons * analogy.perTon))
@@ -33,6 +37,8 @@ export function calculateResources(items, settings) {
     resourcesSaved["totalWeight"] = totalWeight;
     resourcesSaved["totalWeightUnit"] = settings.displayWeightUnit;
 
+    // put all the data calculated for the current material into the
+    // bucket that holds all materials' data
     totalResourcesSaved[totalMaterial.type] = resourcesSaved;
     totalResourcesSaved.totalEnergy += resourcesSaved.energy;
   });

@@ -60,12 +60,12 @@ class Statistics extends Component {
             {
               label: "Recycled Amount",
               backgroundColor: [
-                "red", // color for data at index 0
-                "blue", // color for data at index 1
-                "green", // color for data at index 2
-                "black", // color for data at index 3
-                "yellow", // color for data at index 4
-                "brown" // color for data at index 5
+                "rgba(195, 218, 137, 0.7)", // color for Aluminum
+                "rgba(58, 81, 142, 0.7)", // color for Cardboard
+                "rgba(179, 112, 156, 0.7)", // color for Glass
+                "rgba(211, 166, 71, 0.7)", // color for Paper
+                "rgba(134, 193, 122, 0.7)", // color for Plastic
+                "rgba(224, 141, 149, 0.7)" // color for Steel
               ],
               data: weightsRecycled
             }
@@ -75,6 +75,7 @@ class Statistics extends Component {
         // Configuration options go here
         options: {
           events: ["mousemove"],
+          // prevent graph from being small on mobile devices
           maintainAspectRatio: false,
           title: {
             display: true,
@@ -82,6 +83,7 @@ class Statistics extends Component {
           },
           tooltips: {
             callbacks: {
+              // renders correct weight units for y-axis
               label: function(tooltipItem, data) {
                 let labelValue =
                   data.datasets[tooltipItem.datasetIndex].data[
@@ -102,9 +104,6 @@ class Statistics extends Component {
                   callback: function(value, index, values) {
                     return `${value} ${settings.displayWeightUnit}`;
                   }
-                },
-                scaleLabel: {
-                  labelString: "Hello"
                 }
               }
             ]
@@ -209,7 +208,8 @@ class Statistics extends Component {
 
 Statistics.propTypes = {
   firestore: PropTypes.object.isRequired,
-  items: PropTypes.array
+  items: PropTypes.array,
+  settings: PropTypes.object.isRequired
 };
 
 export default compose(

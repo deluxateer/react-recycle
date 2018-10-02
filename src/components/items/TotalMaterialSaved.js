@@ -83,7 +83,8 @@ class TotalMaterialSaved extends Component {
 TotalMaterialSaved.propTypes = {
   type: PropTypes.string.isRequired,
   analogies: PropTypes.array.isRequired,
-  resourcesSaved: PropTypes.object.isRequired
+  resourcesSaved: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired
 };
 
 export default connect((state, props) => ({

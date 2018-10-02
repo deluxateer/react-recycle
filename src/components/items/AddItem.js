@@ -157,7 +157,6 @@ AddItem.propTypes = {
   firestore: PropTypes.object.isRequired,
   notify: PropTypes.object.isRequired,
   notifyUser: PropTypes.func.isRequired
-  // settings: PropTypes.object.isRequired
 };
 
 export default compose(
@@ -165,7 +164,6 @@ export default compose(
   connect(
     (state, props) => ({
       notify: state.notify
-      // settings: state.settings
     }),
     { notifyUser }
   )

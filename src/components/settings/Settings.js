@@ -7,16 +7,13 @@ import {
   resourceUnits,
   showTrivia
 } from "../../actions/settingsActions";
-// import { compose } from "redux";
 
 class Settings extends Component {
   state = {
     ...this.props.settings.resourceUnits
   };
 
-  setWeightUnit = e => {
-    this.props.displayWeightUnit(e.target.value);
-  };
+  setWeightUnit = e => this.props.displayWeightUnit(e.target.value);
 
   setResourceUnits = e => {
     this.setState({
@@ -31,9 +28,7 @@ class Settings extends Component {
     });
   };
 
-  setShowTrivia = e => {
-    this.props.showTrivia(e.target.checked);
-  };
+  setShowTrivia = e => this.props.showTrivia(e.target.checked);
 
   render() {
     const { showTrivia, displayWeightUnit } = this.props.settings;

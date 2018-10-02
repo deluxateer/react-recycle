@@ -34,15 +34,22 @@ class Summary extends Component {
           <h1 className="display-4">
             Total Savings: {parseFloat(totalEnergy).toFixed(2)} kWh!
           </h1>
-          <p className="lead">
-            Way to go! Keep up the good work. You can find tips on saving more
-            energy{" "}
-            <b>
-              <Link to="/tipsfacts" className="text-success">
-                here.
-              </Link>
-            </b>
-          </p>
+          {items.length === 0 ? (
+            <p className="lead">
+              Way to go! Keep up the good work. You can find tips on saving more
+              energy{" "}
+              <b>
+                <Link to="/tipsfacts" className="text-success">
+                  here.
+                </Link>
+              </b>
+            </p>
+          ) : (
+            <p className="lead">
+              You have not recycled any items yet. You should try{" "}
+              <Link to="/items/add">adding some</Link>!
+            </p>
+          )}
         </div>
         <div className="totalMaterialsGrid">
           {totalMaterials.map((material, i) => (
@@ -61,7 +68,8 @@ class Summary extends Component {
 
 Summary.propTypes = {
   firestore: PropTypes.object.isRequired,
-  items: PropTypes.array
+  items: PropTypes.array,
+  settings: PropTypes.object.isRequired
 };
 
 export default compose(

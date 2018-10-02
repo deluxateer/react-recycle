@@ -206,7 +206,8 @@ Item.propTypes = {
   weightUnit: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
   creationTimestamp: PropTypes.object.isRequired,
-  firestore: PropTypes.object.isRequired
+  firestore: PropTypes.object.isRequired,
+  displayWeightUnit: PropTypes.string.isRequired
 };
 
 export default compose(
