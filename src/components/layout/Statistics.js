@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
-// import convert from "convert-units";
 import Chart from "chart.js";
 import PropTypes from "prop-types";
 import { calculateResources } from "../../lib/calculateResources";
@@ -14,7 +13,7 @@ class Statistics extends Component {
   };
 
   renderChart = () => {
-    const { items, firestore } = this.props;
+    const { items, settings, firestore } = this.props;
     const { Timestamp } = firestore;
 
     // filter and keep the most recent items by this week/month/year
@@ -40,7 +39,7 @@ class Statistics extends Component {
         item.creationTimestamp.seconds > Timestamp.fromDate(timeFilter).seconds
     );
 
-    const totalResources = calculateResources(filteredItems);
+    const totalResources = calculateResources(filteredItems, settings);
 
     if (totalResources) {
       // prepare data by removing totalEnergy and extracting totalWeights
@@ -92,7 +91,7 @@ class Statistics extends Component {
                   labelValue = parseFloat(labelValue).toFixed(2);
                 }
 
-                return `${labelValue} oz`;
+                return `${labelValue} ${settings.displayWeightUnit}`;
               }
             }
           },
@@ -101,7 +100,7 @@ class Statistics extends Component {
               {
                 ticks: {
                   callback: function(value, index, values) {
-                    return `${value} oz`;
+                    return `${value} ${settings.displayWeightUnit}`;
                   }
                 },
                 scaleLabel: {
@@ -216,6 +215,7 @@ Statistics.propTypes = {
 export default compose(
   firestoreConnect([{ collection: "items" }]),
   connect((state, props) => ({
-    items: state.firestore.ordered.items
+    items: state.firestore.ordered.items,
+    settings: state.settings
   }))
 )(Statistics);

@@ -43,7 +43,7 @@ class Items extends Component {
   };
 
   render() {
-    const { items } = this.props;
+    const { items, showTrivia } = this.props;
     if (items) {
       const sortedItems = items
         .sort(this.sortFunction())
@@ -63,7 +63,7 @@ class Items extends Component {
       return (
         <div id="items">
           <div className="container">
-            <Trivia />
+            {showTrivia ? <Trivia /> : null}
             <h2>Recycled Items History</h2>
             <div className="d-flex justify-content-center mt-3">
               <h3>Sort By: </h3>
@@ -91,6 +91,7 @@ class Items extends Component {
 export default compose(
   firestoreConnect([{ collection: "items" }]),
   connect((state, props) => ({
-    items: state.firestore.ordered.items
+    items: state.firestore.ordered.items,
+    showTrivia: state.settings.showTrivia
   }))
 )(Items);

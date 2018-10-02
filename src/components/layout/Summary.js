@@ -15,13 +15,14 @@ class Summary extends Component {
   state = { totalMaterials };
 
   render() {
-    const totalResources = calculateResources(this.props.items);
+    const { items, settings } = this.props;
+    const totalResources = calculateResources(items, settings);
     const { totalEnergy } = totalResources;
     const { totalMaterials } = this.state;
 
     return (
       <React.Fragment>
-        <Trivia />
+        {settings.showTrivia ? <Trivia /> : null}
         <div
           className="jumbotron"
           style={{
@@ -66,6 +67,7 @@ Summary.propTypes = {
 export default compose(
   firestoreConnect([{ collection: "items" }]),
   connect((state, props) => ({
-    items: state.firestore.ordered.items
+    items: state.firestore.ordered.items,
+    settings: state.settings
   }))
 )(Summary);

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import convert from "convert-units";
 import PropTypes from "prop-types";
 
 import aluminum from "../../media/aluminum.jpeg";
@@ -61,7 +64,8 @@ class Item extends Component {
       weight,
       weightUnit,
       quantity,
-      creationTimestamp
+      creationTimestamp,
+      displayWeightUnit
     } = this.props;
 
     let creationDate = creationTimestamp.toDate();
@@ -170,7 +174,15 @@ class Item extends Component {
           </div>
           <div className="d-flex justify-content-between">
             <p className="card-text mb-0">
-              {weight} {weightUnit} {quantity > 1 ? "each" : null}
+              {convert(weight)
+                .from(weightUnit)
+                .to(displayWeightUnit)
+                // Keeps significant digits that user inputed
+                .toFixed(
+                  weight.toString().slice(weight.toString().indexOf(".") + 1)
+                    .length
+                )}{" "}
+              {displayWeightUnit} {quantity > 1 ? "each" : null}
             </p>
             <a
               href="#!"
@@ -197,4 +209,9 @@ Item.propTypes = {
   firestore: PropTypes.object.isRequired
 };
 
-export default firestoreConnect()(Item);
+export default compose(
+  firestoreConnect(),
+  connect((state, props) => ({
+    displayWeightUnit: state.settings.displayWeightUnit
+  }))
+)(Item);

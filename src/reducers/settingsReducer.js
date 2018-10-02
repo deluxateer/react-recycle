@@ -7,6 +7,7 @@ import {
 const initialState = {
   displayWeightUnit: "oz",
   resourceUnits: {
+    energy: "kWh",
     oil: "gal",
     landfillSpace: "yd3",
     airPollutants: "lb",

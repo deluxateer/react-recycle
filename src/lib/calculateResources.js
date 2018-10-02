@@ -1,7 +1,7 @@
 import { materialsAndAnalogies as totalMaterials } from "./materialsAndAnalogies";
 import convert from "convert-units";
 
-export function calculateResources(items) {
+export function calculateResources(items, settings) {
   const totalResourcesSaved = {
     totalEnergy: 0
   };
@@ -14,16 +14,15 @@ export function calculateResources(items) {
 
     const totalWeight = singleElementItems.reduce((total, item) => {
       // convert item to user chosen weight unit here
-      // @todo: change to units chosen from user settings
       const adjustedWeight = convert(item.weight)
         .from(item.weightUnit)
-        .to("oz");
+        .to(settings.displayWeightUnit);
       return total + parseFloat(adjustedWeight * item.quantity);
     }, 0);
 
     // convert to tons for calculating correct ratios
     const totalTons = convert(totalWeight)
-      .from("oz") //units chosen from user settings
+      .from(settings.displayWeightUnit) //units chosen from user settings
       .to("t");
 
     const resourcesSaved = {};
@@ -32,7 +31,7 @@ export function calculateResources(items) {
         (resourcesSaved[analogy.name] = parseFloat(totalTons * analogy.perTon))
     );
     resourcesSaved["totalWeight"] = totalWeight;
-    resourcesSaved["totalWeightUnit"] = "oz";
+    resourcesSaved["totalWeightUnit"] = settings.displayWeightUnit;
 
     totalResourcesSaved[totalMaterial.type] = resourcesSaved;
     totalResourcesSaved.totalEnergy += resourcesSaved.energy;

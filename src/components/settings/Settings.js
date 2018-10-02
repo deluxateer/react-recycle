@@ -36,11 +36,7 @@ class Settings extends Component {
   };
 
   render() {
-    const {
-      showTrivia,
-      displayWeightUnit,
-      resourceUnits
-    } = this.props.settings;
+    const { showTrivia, displayWeightUnit } = this.props.settings;
 
     return (
       <div>
@@ -125,7 +121,7 @@ class Settings extends Component {
                           className="custom-control-input"
                         />
                         <label className="custom-control-label" htmlFor="oil-l">
-                          Liters (l)
+                          Litres (l)
                         </label>
                       </div>
                     </div>
@@ -446,7 +442,7 @@ class Settings extends Component {
                           className="custom-control-label"
                           htmlFor="water-l"
                         >
-                          Liters (l)
+                          Litres (l)
                         </label>
                       </div>
                     </div>
