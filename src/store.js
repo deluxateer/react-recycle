@@ -44,8 +44,27 @@ const rootReducer = combineReducers({
   settings: settingsReducer
 });
 
+// Check for items in localStorage
+if (localStorage.getItem("settings") == null) {
+  const defaultSettings = {
+    displayWeightUnit: "oz",
+    resourceUnits: {
+      energy: "kWh",
+      oil: "gal",
+      landfillSpace: "yd3",
+      airPollutants: "lb",
+      sand: "lb",
+      sodaAsh: "lb",
+      water: "gal"
+    },
+    showTrivia: true
+  };
+
+  localStorage.setItem("settings", JSON.stringify(defaultSettings));
+}
+
 // Create initial state
-const InitialState = {};
+const InitialState = { settings: JSON.parse(localStorage.getItem("settings")) };
 
 // Create store
 const store = createStoreWithFirebase(

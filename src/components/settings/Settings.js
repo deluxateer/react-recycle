@@ -7,7 +7,7 @@ import {
   resourceUnits,
   showTrivia
 } from "../../actions/settingsActions";
-import { compose } from "redux";
+// import { compose } from "redux";
 
 class Settings extends Component {
   state = {

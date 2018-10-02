@@ -30,7 +30,7 @@ class Register extends Component {
     const { message, messageType } = this.props.notify;
 
     return (
-      <div className="row">
+      <div className="row" style={{ height: `${window.innerHeight - 144}px` }}>
         <div className="col-md-6 mx-auto">
           <div className="card">
             <div className="card-body">

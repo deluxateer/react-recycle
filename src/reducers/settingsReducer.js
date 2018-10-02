@@ -4,21 +4,7 @@ import {
   SHOW_TRIVIA
 } from "../actions/types";
 
-const initialState = {
-  displayWeightUnit: "oz",
-  resourceUnits: {
-    energy: "kWh",
-    oil: "gal",
-    landfillSpace: "yd3",
-    airPollutants: "lb",
-    sand: "lb",
-    sodaAsh: "lb",
-    water: "gal"
-  },
-  showTrivia: true
-};
-
-export default function(state = initialState, action) {
+export default function(state = {}, action) {
   switch (action.type) {
     case DISPLAY_WEIGHT_UNIT:
       return {

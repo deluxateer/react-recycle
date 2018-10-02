@@ -198,8 +198,8 @@ class Statistics extends Component {
           The Pie chart emphasizes the composition of your recycled materials.
         </p>
         <p>The Bar chart emphasizes the quantity of your recycled materials.</p>
-        <p>
-          <b>Note:</b> Hover over the chart to see exact values, or tap on it if
+        <p className="text-secondary">
+          <b>Tip:</b> Hover over the chart to see exact values, or tap on it if
           viewing from a mobile device.
         </p>
       </div>
