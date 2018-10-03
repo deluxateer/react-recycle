@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
 import { firebaseConnect } from "react-redux-firebase";
 import { notifyUser } from "../../actions/notifyActions";
+
 import Alert from "../layout/Alert";
+import { defaultItems } from "../../lib/defaultItems";
 
 class Register extends Component {
   state = {
@@ -15,12 +18,29 @@ class Register extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { firebase, notifyUser } = this.props;
+    const { firebase, firestore, notifyUser } = this.props;
     const { email, password } = this.state;
 
     // Register with firebase
     firebase
       .createUser({ email, password })
+      .then(userData => {
+        const currTimestamp = firestore.FieldValue.serverTimestamp();
+        defaultItems.forEach(item => {
+          firestore.add(
+            {
+              collection: "users",
+              doc: firebase.auth().currentUser.uid,
+              subcollections: [{ collection: "items" }]
+            },
+            {
+              ...item,
+              creationTimestamp: currTimestamp
+            }
+          );
+          // console.log("finished setting item: ", item);
+        });
+      })
       .catch(err => notifyUser("That User Already Exists", "error"));
   };
 
@@ -87,6 +107,7 @@ Register.propTypes = {
 
 export default compose(
   firebaseConnect(),
+  firestoreConnect(),
   connect(
     (state, props) => ({
       notify: state.notify

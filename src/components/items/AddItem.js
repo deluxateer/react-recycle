@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import { firebaseConnect } from "react-redux-firebase";
 import { firestoreConnect } from "react-redux-firebase";
 import { notifyUser } from "../../actions/notifyActions";
 import Alert from "../layout/Alert";
@@ -25,7 +26,7 @@ class AddItem extends Component {
     e.preventDefault();
 
     const { state } = this;
-    const { firestore, history, notifyUser } = this.props;
+    const { firestore, firebase, history, notifyUser } = this.props;
 
     // reject input if weight = 0
     if (parseFloat(state.weight) === 0) {
@@ -46,7 +47,14 @@ class AddItem extends Component {
     };
 
     firestore
-      .add({ collection: "items" }, newItem)
+      .add(
+        {
+          collection: "users",
+          doc: firebase.auth().currentUser.uid,
+          subcollections: [{ collection: "items" }]
+        },
+        newItem
+      )
       .then(() => history.goBack());
   };
 
@@ -160,6 +168,7 @@ AddItem.propTypes = {
 };
 
 export default compose(
+  firebaseConnect(),
   firestoreConnect(),
   connect(
     (state, props) => ({

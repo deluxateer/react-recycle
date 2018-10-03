@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
+import { firebaseConnect } from "react-redux-firebase";
 import PropTypes from "prop-types";
 
 import Trivia from "./Trivia";
@@ -19,6 +20,7 @@ class Summary extends Component {
     const totalResources = calculateResources(items, settings);
     const { totalEnergy } = totalResources;
     const { totalMaterials } = this.state;
+    // console.log(this.props.firebase);
 
     return (
       <React.Fragment>
@@ -34,7 +36,7 @@ class Summary extends Component {
           <h1 className="display-4">
             Total Savings: {parseFloat(totalEnergy).toFixed(2)} kWh!
           </h1>
-          {items.length === 0 ? (
+          {items.length > 0 ? (
             <p className="lead">
               Way to go! Keep up the good work. You can find tips on saving more
               energy{" "}
@@ -47,7 +49,9 @@ class Summary extends Component {
           ) : (
             <p className="lead">
               You have not recycled any items yet. You should try{" "}
-              <Link to="/items/add">adding some</Link>!
+              <Link to="/items/add" className="text-success">
+                adding some!
+              </Link>
             </p>
           )}
         </div>
@@ -72,10 +76,28 @@ Summary.propTypes = {
   settings: PropTypes.object.isRequired
 };
 
+// export default compose(
+//   firestoreConnect([{ collection: "items" }]),
+//   connect((state, props) => ({
+//     items: state.firestore.ordered.items,
+//     settings: state.settings
+//   }))
+// )(Summary);
+
 export default compose(
-  firestoreConnect([{ collection: "items" }]),
-  connect((state, props) => ({
-    items: state.firestore.ordered.items,
-    settings: state.settings
-  }))
+  firebaseConnect(),
+  firestoreConnect(props => [
+    {
+      collection: "users",
+      doc: props.firebase.auth().currentUser.uid,
+      subcollections: [{ collection: "items" }],
+      storeAs: "userItems"
+    }
+  ]),
+  connect((state, props) => {
+    return {
+      items: state.firestore.ordered.userItems,
+      settings: state.settings
+    };
+  })
 )(Summary);

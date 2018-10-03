@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
+import { firebaseConnect } from "react-redux-firebase";
 import PropTypes from "prop-types";
 
 import Summary from "./Summary";
@@ -39,9 +40,28 @@ Dashboard.propTypes = {
   items: PropTypes.array
 };
 
+// export default compose(
+//   firestoreConnect([{ collection: "items" }]),
+//   connect((state, props) => ({
+//     items: state.firestore.ordered.items
+//   }))
+// )(Dashboard);
+
 export default compose(
-  firestoreConnect([{ collection: "items" }]),
+  firebaseConnect(),
+  firestoreConnect(props => [
+    {
+      collection: "users",
+      doc: props.firebase.auth().currentUser.uid,
+      subcollections: [
+        {
+          collection: "items"
+        }
+      ],
+      storeAs: "userItems"
+    }
+  ]),
   connect((state, props) => ({
-    items: state.firestore.ordered.items
+    items: state.firestore.ordered.userItems
   }))
 )(Dashboard);

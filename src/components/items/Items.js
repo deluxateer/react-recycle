@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
+import { firebaseConnect } from "react-redux-firebase";
 import PropTypes from "prop-types";
 
 import Trivia from "../layout/Trivia";
@@ -44,7 +45,6 @@ class Items extends Component {
 
   render() {
     const { items, showTrivia } = this.props;
-    console.log(items);
 
     if (items) {
       const sortedItems = items
@@ -87,7 +87,9 @@ class Items extends Component {
             ) : (
               <p>
                 You don't have any items yet. Try{" "}
-                <Link to="/item/add">adding some!</Link>
+                <Link to="/item/add" className="text-success">
+                  adding some!
+                </Link>
               </p>
             )}
           </div>
@@ -105,10 +107,30 @@ Items.propTypes = {
   showTrivia: PropTypes.bool.isRequired
 };
 
+// export default compose(
+//   firestoreConnect([{ collection: "items" }]),
+//   connect((state, props) => ({
+//     items: state.firestore.ordered.items,
+//     showTrivia: state.settings.showTrivia
+//   }))
+// )(Items);
+
 export default compose(
-  firestoreConnect([{ collection: "items" }]),
+  firebaseConnect(),
+  firestoreConnect(props => [
+    {
+      collection: "users",
+      doc: props.firebase.auth().currentUser.uid,
+      subcollections: [
+        {
+          collection: "items"
+        }
+      ],
+      storeAs: "userItems"
+    }
+  ]),
   connect((state, props) => ({
-    items: state.firestore.ordered.items,
+    items: state.firestore.ordered.userItems,
     showTrivia: state.settings.showTrivia
   }))
 )(Items);

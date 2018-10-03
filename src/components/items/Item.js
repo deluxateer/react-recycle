@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { firestoreConnect } from "react-redux-firebase";
+// import { firebaseConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import convert from "convert-units";
@@ -15,8 +16,19 @@ import steel from "../../media/steel.jpeg";
 
 class Item extends Component {
   onDeleteClick = () => {
-    const { id, firestore } = this.props;
-    firestore.delete({ collection: "items", doc: id });
+    const { id, firestore, firebase } = this.props;
+    // firestore.delete({ collection: "items", doc: id });
+    firestore.delete({
+      collection: "users",
+      doc: firebase.auth().currentUser.uid,
+      subcollections: [{ collection: "items", doc: id }]
+    });
+    // use get method to manually refresh redux state items after adding to firestore
+    firestore.get({
+      collection: "users",
+      doc: firebase.auth().currentUser.uid,
+      subcollections: [{ collection: "items" }]
+    });
   };
 
   onDuplicateClick = e => {
@@ -28,7 +40,8 @@ class Item extends Component {
       weight,
       weightUnit,
       quantity,
-      firestore
+      firestore,
+      firebase
     } = this.props;
 
     const newItem = {
@@ -40,10 +53,23 @@ class Item extends Component {
       creationTimestamp: firestore.Timestamp.now()
     };
 
-    firestore.add({ collection: "items" }, newItem);
+    // firestore.add({ collection: "items" }, newItem);
+    firestore.add(
+      {
+        collection: "users",
+        doc: firebase.auth().currentUser.uid,
+        subcollections: [{ collection: "items" }]
+      },
+      newItem
+    );
 
-    // use get method to refresh redux state items after adding to firestore
-    firestore.get({ collection: "items" });
+    // use get method to manually refresh redux state items after adding to firestore
+    // firestore.get({ collection: "items" });
+    firestore.get({
+      collection: "users",
+      doc: firebase.auth().currentUser.uid,
+      subcollections: [{ collection: "items" }]
+    });
   };
 
   render() {
@@ -68,18 +94,24 @@ class Item extends Component {
       displayWeightUnit
     } = this.props;
 
-    let creationDate = creationTimestamp.toDate();
-    // converts Date into MM/DD/YY format
-    creationDate =
-      creationDate.getMonth() +
-      1 +
-      "/" +
-      creationDate.getDate() +
-      "/" +
-      creationDate
-        .getFullYear()
-        .toString()
-        .slice(2);
+    // if server hasn't returned a Timestamp after the item was
+    // freshly created, then temporarily render a placeholder date
+    let creationDate = "XX/XX/XX";
+
+    if (creationTimestamp) {
+      creationDate = creationTimestamp.toDate();
+      // converts Date into MM/DD/YY format
+      creationDate =
+        creationDate.getMonth() +
+        1 +
+        "/" +
+        creationDate.getDate() +
+        "/" +
+        creationDate
+          .getFullYear()
+          .toString()
+          .slice(2);
+    }
 
     return (
       <div className="item-card card">
@@ -205,7 +237,7 @@ Item.propTypes = {
   weight: PropTypes.number.isRequired,
   weightUnit: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
-  creationTimestamp: PropTypes.object.isRequired,
+  creationTimestamp: PropTypes.object, // Timestamp may not be ready after freshly created
   firestore: PropTypes.object.isRequired,
   displayWeightUnit: PropTypes.string.isRequired
 };
