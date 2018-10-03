@@ -20,7 +20,6 @@ class Summary extends Component {
     const totalResources = calculateResources(items, settings);
     const { totalEnergy } = totalResources;
     const { totalMaterials } = this.state;
-    // console.log(this.props.firebase);
 
     return (
       <React.Fragment>
@@ -72,17 +71,10 @@ class Summary extends Component {
 
 Summary.propTypes = {
   firestore: PropTypes.object.isRequired,
+  firebase: PropTypes.object.isRequired,
   items: PropTypes.array,
   settings: PropTypes.object.isRequired
 };
-
-// export default compose(
-//   firestoreConnect([{ collection: "items" }]),
-//   connect((state, props) => ({
-//     items: state.firestore.ordered.items,
-//     settings: state.settings
-//   }))
-// )(Summary);
 
 export default compose(
   firebaseConnect(),

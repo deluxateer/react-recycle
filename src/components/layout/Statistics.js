@@ -209,17 +209,10 @@ class Statistics extends Component {
 
 Statistics.propTypes = {
   firestore: PropTypes.object.isRequired,
+  firebase: PropTypes.object.isRequired,
   items: PropTypes.array,
   settings: PropTypes.object.isRequired
 };
-
-// export default compose(
-//   firestoreConnect([{ collection: "items" }]),
-//   connect((state, props) => ({
-//     items: state.firestore.ordered.items,
-//     settings: state.settings
-//   }))
-// )(Statistics);
 
 export default compose(
   firebaseConnect(),
@@ -227,11 +220,7 @@ export default compose(
     {
       collection: "users",
       doc: props.firebase.auth().currentUser.uid,
-      subcollections: [
-        {
-          collection: "items"
-        }
-      ],
+      subcollections: [{ collection: "items" }],
       storeAs: "userItems"
     }
   ]),

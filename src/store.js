@@ -9,14 +9,15 @@ import notifyReducer from "./reducers/notifyReducer";
 import settingsReducer from "./reducers/settingsReducer";
 
 // sample firebase config object with credentials
-const sampleFirebaseConfig = {
-  apiKey: "sample-key",
-  authDomain: "sample-domain",
-  databaseURL: "sampleURL",
-  projectId: "projectId",
-  storageBucket: "sample-storage",
-  messagingSenderId: "sample-id"
-};
+
+// const sampleFirebaseConfig = {
+//   apiKey: "sample-key",
+//   authDomain: "sample-domain",
+//   databaseURL: "sampleURL",
+//   projectId: "projectId",
+//   storageBucket: "sample-storage",
+//   messagingSenderId: "sample-id"
+// };
 
 // react-redux-firebase config
 const rrfConfig = {

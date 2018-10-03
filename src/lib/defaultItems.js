@@ -4,69 +4,79 @@ export const defaultItems = [
     material: "Plastic",
     quantity: 1,
     weight: 1.7342,
-    weightUnit: "g" // 10/1/18 10:21:55 PM
+    weightUnit: "g",
+    creationTimestamp: new Date("December 1, 2018 22:21:55")
   },
   {
     itemName: "Coke Bottles",
     material: "Glass",
     quantity: 2,
     weight: 1,
-    weightUnit: "oz" // 9/27/18 4:50:56 PM
+    weightUnit: "oz",
+    creationTimestamp: new Date("September 27, 2018 16:50:56")
   },
   {
     itemName: "Fanta Soda Cans",
     material: "Aluminum",
     quantity: 4,
     weight: 0.4,
-    weightUnit: "oz" // 9/24/18 5:05:31 PM
+    weightUnit: "oz",
+    creationTimestamp: new Date("September 24, 2018 17:05:31")
   },
   {
     itemName: "Steel Ruler",
     material: "Steel",
     quantity: 1,
     weight: 9,
-    weightUnit: "oz" // 9/26/18  5:02:07 PM
+    weightUnit: "oz",
+    creationTimestamp: new Date("September 26, 2018 17:02:07")
   },
   {
     itemName: "Coke Bottles",
     material: "Glass",
     quantity: 2,
     weight: 1,
-    weightUnit: "oz" // 9/25/18 12:58:54 PM
+    weightUnit: "oz",
+    creationTimestamp: new Date("September 25, 2018 12:58:54")
   },
   {
     itemName: "Fanta Soda Cans",
     material: "Aluminum",
     quantity: 4,
     weight: 0.4,
-    weightUnit: "oz" // 9/26/18 7:06:11 PM
+    weightUnit: "oz",
+    creationTimestamp: new Date("September 26, 2018 19:06:11")
   },
   {
     itemName: "Poland Spring Water Bottle",
     material: "Plastic",
     quantity: 2,
     weight: 1,
-    weightUnit: "oz" // 9/17/18 2:30:00 AM
+    weightUnit: "oz",
+    creationTimestamp: new Date("September 17, 2018 02:30:00")
   },
   {
     itemName: "Ruled Notebook",
     material: "Paper",
     quantity: 1,
     weight: 3.6,
-    weightUnit: "oz" // 9/17/18 12:00:00 AM
+    weightUnit: "oz",
+    creationTimestamp: new Date("September 17, 2018 00:00:00")
   },
   {
     itemName: "College Notebook",
     material: "Paper",
     quantity: 2,
     weight: 0.8,
-    weightUnit: "oz" // 8/2/18 2:00:00 AM
+    weightUnit: "oz",
+    creationTimestamp: new Date("August 2, 2018 02:00:00")
   },
   {
     itemName: "Oprah Cutout",
     material: "Cardboard",
     quantity: 1,
     weight: 0.7,
-    weightUnit: "oz" // 7/26/17 3:00:00 AM
+    weightUnit: "oz",
+    creationTimestamp: new Date("July 7, 2017 03:00:00")
   }
 ];

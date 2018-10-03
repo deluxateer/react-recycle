@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { firebaseConnect } from "react-redux-firebase";
 import { firestoreConnect } from "react-redux-firebase";
 import { notifyUser } from "../../actions/notifyActions";
+
 import Alert from "../layout/Alert";
 
 class AddItem extends Component {
@@ -163,6 +164,7 @@ class AddItem extends Component {
 
 AddItem.propTypes = {
   firestore: PropTypes.object.isRequired,
+  firebase: PropTypes.object.isRequired,
   notify: PropTypes.object.isRequired,
   notifyUser: PropTypes.func.isRequired
 };

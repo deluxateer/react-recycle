@@ -68,15 +68,9 @@ class Sidebar extends Component {
 
 Sidebar.propTypes = {
   firestore: PropTypes.object.isRequired,
+  firebase: PropTypes.object.isRequired,
   items: PropTypes.array
 };
-
-// export default compose(
-//   firestoreConnect(props => [{ collection: "items" }]),
-//   connect((state, props) => ({
-//     items: state.firestore.ordered.items
-//   }))
-// )(Sidebar);
 
 export default compose(
   firebaseConnect(),
@@ -84,11 +78,7 @@ export default compose(
     {
       collection: "users",
       doc: props.firebase.auth().currentUser.uid,
-      subcollections: [
-        {
-          collection: "items"
-        }
-      ],
+      subcollections: [{ collection: "items" }],
       storeAs: "userItems"
     }
   ]),

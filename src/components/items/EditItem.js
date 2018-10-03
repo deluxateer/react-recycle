@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { firebaseConnect } from "react-redux-firebase";
 import { notifyUser } from "../../actions/notifyActions";
+
 import Alert from "../layout/Alert";
 import Spinner from "../layout/Spinner";
 
@@ -51,7 +52,6 @@ class EditItem extends Component {
     };
 
     firestore
-      // .update({ collection: "items", doc: item.id }, updatedItem)
       .update(
         {
           collection: "users",
@@ -181,23 +181,11 @@ class EditItem extends Component {
 
 EditItem.propTypes = {
   firestore: PropTypes.object.isRequired,
+  firebase: PropTypes.object.isRequired,
   item: PropTypes.object,
   notify: PropTypes.object.isRequired,
   notifyUser: PropTypes.func.isRequired
 };
-
-// export default compose(
-//   firestoreConnect(props => [
-//     { collection: "items", doc: props.match.params.id, storeAs: "item" }
-//   ]),
-//   connect(
-//     ({ firestore: { ordered }, notify }, props) => ({
-//       item: ordered.item && ordered.item[0],
-//       notify
-//     }),
-//     { notifyUser }
-//   )
-// )(EditItem);
 
 export default compose(
   firebaseConnect(),

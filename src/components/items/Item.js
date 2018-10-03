@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { firestoreConnect } from "react-redux-firebase";
-// import { firebaseConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import convert from "convert-units";
@@ -17,12 +16,13 @@ import steel from "../../media/steel.jpeg";
 class Item extends Component {
   onDeleteClick = () => {
     const { id, firestore, firebase } = this.props;
-    // firestore.delete({ collection: "items", doc: id });
+
     firestore.delete({
       collection: "users",
       doc: firebase.auth().currentUser.uid,
       subcollections: [{ collection: "items", doc: id }]
     });
+
     // use get method to manually refresh redux state items after adding to firestore
     firestore.get({
       collection: "users",
@@ -53,7 +53,6 @@ class Item extends Component {
       creationTimestamp: firestore.Timestamp.now()
     };
 
-    // firestore.add({ collection: "items" }, newItem);
     firestore.add(
       {
         collection: "users",
@@ -64,7 +63,6 @@ class Item extends Component {
     );
 
     // use get method to manually refresh redux state items after adding to firestore
-    // firestore.get({ collection: "items" });
     firestore.get({
       collection: "users",
       doc: firebase.auth().currentUser.uid,

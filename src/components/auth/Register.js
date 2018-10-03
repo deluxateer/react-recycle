@@ -25,7 +25,6 @@ class Register extends Component {
     firebase
       .createUser({ email, password })
       .then(userData => {
-        const currTimestamp = firestore.FieldValue.serverTimestamp();
         defaultItems.forEach(item => {
           firestore.add(
             {
@@ -33,12 +32,8 @@ class Register extends Component {
               doc: firebase.auth().currentUser.uid,
               subcollections: [{ collection: "items" }]
             },
-            {
-              ...item,
-              creationTimestamp: currTimestamp
-            }
+            item
           );
-          // console.log("finished setting item: ", item);
         });
       })
       .catch(err => notifyUser("That User Already Exists", "error"));
@@ -101,6 +96,7 @@ class Register extends Component {
 
 Register.propTypes = {
   firebase: PropTypes.object.isRequired,
+  firestore: PropTypes.object.isRequired,
   notify: PropTypes.object.isRequired,
   notifyUser: PropTypes.func.isRequired
 };

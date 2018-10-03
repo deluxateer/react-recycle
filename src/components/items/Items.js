@@ -103,17 +103,10 @@ class Items extends Component {
 
 Items.propTypes = {
   firestore: PropTypes.object.isRequired,
+  firebase: PropTypes.object.isRequired,
   items: PropTypes.array,
   showTrivia: PropTypes.bool.isRequired
 };
-
-// export default compose(
-//   firestoreConnect([{ collection: "items" }]),
-//   connect((state, props) => ({
-//     items: state.firestore.ordered.items,
-//     showTrivia: state.settings.showTrivia
-//   }))
-// )(Items);
 
 export default compose(
   firebaseConnect(),
@@ -121,11 +114,7 @@ export default compose(
     {
       collection: "users",
       doc: props.firebase.auth().currentUser.uid,
-      subcollections: [
-        {
-          collection: "items"
-        }
-      ],
+      subcollections: [{ collection: "items" }],
       storeAs: "userItems"
     }
   ]),
