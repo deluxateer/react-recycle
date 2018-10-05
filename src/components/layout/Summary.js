@@ -11,9 +11,18 @@ import TotalMaterialSaved from "../items/TotalMaterialSaved";
 
 import { materialsAndAnalogies as totalMaterials } from "../../lib/materialsAndAnalogies";
 import { calculateResources } from "../../lib/calculateResources";
+import { getRandomFact } from "../../lib/tipsAndFacts";
 
 class Summary extends Component {
-  state = { totalMaterials };
+  constructor(props) {
+    super(props);
+    const randomFact = getRandomFact();
+
+    this.state = {
+      totalMaterials,
+      randomFact
+    };
+  }
 
   render() {
     const { items, settings } = this.props;
@@ -23,7 +32,7 @@ class Summary extends Component {
 
     return (
       <React.Fragment>
-        {settings.showTrivia ? <Trivia /> : null}
+        {settings.showTrivia ? <Trivia fact={this.state.randomFact} /> : null}
         <div
           className="jumbotron"
           style={{

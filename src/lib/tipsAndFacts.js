@@ -72,3 +72,17 @@ export const tipsAndFactsSource = {
   source:
     "http://www.wm.com/location/california/ventura-county/west-hills/recycle/facts.jsp"
 };
+
+export const getRandomFact = () => {
+  const tipsAndFacts = { ...tipsAndFactsSource };
+  delete tipsAndFacts["source"];
+
+  const allFacts = [];
+  for (let material in tipsAndFacts) {
+    const materialFacts = tipsAndFacts[material].facts;
+    Array.prototype.push.apply(allFacts, materialFacts);
+  }
+  // pick a random fact
+  const randomFact = allFacts[Math.floor(Math.random() * allFacts.length)];
+  return randomFact;
+};

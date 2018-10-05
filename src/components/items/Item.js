@@ -122,6 +122,7 @@ class Item extends Component {
           className="w-100 h-100"
           src={materials[material.toLowerCase()]}
           alt={material}
+          style={{ maxHeight: "160px" }}
         />
         <div className="card-body p-3">
           <div className="d-flex justify-content-between mb-2">
@@ -141,14 +142,15 @@ class Item extends Component {
                   <i className="fas fa-pencil-alt" />
                 </Link>
                 <button
-                  className="btn btn-link position-relative p-0 ml-3 mr-1"
+                  className="btn btn-link position-relative p-0 ml-3"
                   type="button"
                   data-toggle="modal"
                   data-target={`#deleteModal${id.substring(0, 5)}`}
+                  style={{ minWidth: "16px" }}
                 >
                   <i
                     className="fas fa-times position-absolute text-danger"
-                    style={{ top: 0 }}
+                    style={{ top: 0, left: 0 }}
                   />
                 </button>
                 {/* Delete Modal */}

@@ -10,10 +10,18 @@ import Trivia from "../layout/Trivia";
 import Item from "./Item";
 import Spinner from "../layout/Spinner";
 
+import { getRandomFact } from "../../lib/tipsAndFacts";
+
 class Items extends Component {
-  state = {
-    sortType: "mostRecent"
-  };
+  constructor(props) {
+    super(props);
+    const randomFact = getRandomFact();
+
+    this.state = {
+      sortType: "mostRecent",
+      randomFact
+    };
+  }
 
   setSortType = e => this.setState({ sortType: e.target.value });
 
@@ -65,7 +73,7 @@ class Items extends Component {
       return (
         <div id="items">
           <div className="container">
-            {showTrivia ? <Trivia /> : null}
+            {showTrivia ? <Trivia fact={this.state.randomFact} /> : null}
             <h2>Recycled Items History</h2>
             {items.length > 0 ? (
               <React.Fragment>
