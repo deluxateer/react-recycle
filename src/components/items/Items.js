@@ -75,7 +75,7 @@ class Items extends Component {
                     onChange={this.setSortType}
                     className="custom-select w-50 ml-3"
                   >
-                    <option value="mostRecent">Most Recently Added</option>
+                    <option value="mostRecent">Newest</option>
                     <option value="oldest">Oldest</option>
                     <option value="materials">Materials</option>
                     <option value="highestWeight">Highest Total Weight</option>

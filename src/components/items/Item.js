@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { firebaseConnect } from "react-redux-firebase";
 import convert from "convert-units";
 import PropTypes from "prop-types";
 
@@ -20,14 +21,16 @@ class Item extends Component {
     firestore.delete({
       collection: "users",
       doc: firebase.auth().currentUser.uid,
-      subcollections: [{ collection: "items", doc: id }]
+      subcollections: [{ collection: "items", doc: id }],
+      storeAs: "userItems"
     });
 
-    // use get method to manually refresh redux state items after adding to firestore
+    // manually refetch items to make reduxFirestore delete request successful
     firestore.get({
       collection: "users",
       doc: firebase.auth().currentUser.uid,
-      subcollections: [{ collection: "items" }]
+      subcollections: [{ collection: "items" }],
+      storeAs: "userItems"
     });
   };
 
@@ -57,7 +60,8 @@ class Item extends Component {
       {
         collection: "users",
         doc: firebase.auth().currentUser.uid,
-        subcollections: [{ collection: "items" }]
+        subcollections: [{ collection: "items" }],
+        storeAs: "userItems"
       },
       newItem
     );
@@ -66,7 +70,8 @@ class Item extends Component {
     firestore.get({
       collection: "users",
       doc: firebase.auth().currentUser.uid,
-      subcollections: [{ collection: "items" }]
+      subcollections: [{ collection: "items" }],
+      storeAs: "userItems"
     });
   };
 
@@ -241,6 +246,7 @@ Item.propTypes = {
 };
 
 export default compose(
+  firebaseConnect(),
   firestoreConnect(),
   connect((state, props) => ({
     displayWeightUnit: state.settings.displayWeightUnit

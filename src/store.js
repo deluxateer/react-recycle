@@ -10,14 +10,14 @@ import settingsReducer from "./reducers/settingsReducer";
 
 // sample firebase config object with credentials
 
-// const sampleFirebaseConfig = {
-//   apiKey: "sample-key",
-//   authDomain: "sample-domain",
-//   databaseURL: "sampleURL",
-//   projectId: "projectId",
-//   storageBucket: "sample-storage",
-//   messagingSenderId: "sample-id"
-// };
+const sampleFirebaseConfig = {
+  apiKey: "sample-key",
+  authDomain: "sample-domain",
+  databaseURL: "sampleURL",
+  projectId: "projectId",
+  storageBucket: "sample-storage",
+  messagingSenderId: "sample-id"
+};
 
 // react-redux-firebase config
 const rrfConfig = {
@@ -68,12 +68,16 @@ if (localStorage.getItem("settings") == null) {
 const InitialState = { settings: JSON.parse(localStorage.getItem("settings")) };
 
 // Create store
+
 const store = createStoreWithFirebase(
   rootReducer,
   InitialState,
   compose(
     reactReduxFirebase(firebase),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    process.env.NODE_ENV === "development"
+      ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
+        window.__REDUX_DEVTOOLS_EXTENSION__()
+      : compose
   )
 );
 
