@@ -10,7 +10,8 @@ import Alert from "../layout/Alert";
 class Login extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    emailForReset: ""
   };
 
   componentDidMount() {
@@ -30,6 +31,32 @@ class Login extends Component {
         password
       })
       .catch(err => notifyUser("Invalid Login Credentials", "error"));
+  };
+
+  sendPasswordReset = e => {
+    e.preventDefault();
+
+    const { firebase, notifyUser } = this.props;
+    const { emailForReset } = this.state;
+
+    firebase
+      .auth()
+      .sendPasswordResetEmail(emailForReset)
+      .then(() =>
+        notifyUser("A Password Reset email was sent to you.", "success")
+      )
+      .catch(err =>
+        notifyUser(
+          "Password Reset has failed. Try making an account first.",
+          "error"
+        )
+      );
+
+    // close modal without jQuery
+    const closeButton = document.querySelector(
+      "#passwordResetForm .btn-secondary"
+    );
+    closeButton.click();
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -79,6 +106,76 @@ class Login extends Component {
                   className="btn btn-success btn-block"
                 />
               </form>
+              <button
+                type="button"
+                className="btn btn-link btn-sm text-success px-0"
+                data-toggle="modal"
+                data-target="#passwordResetCenter"
+              >
+                Forgot Password?
+              </button>
+              {/* Password Reset Modal */}
+              <div
+                className="modal fade"
+                id="passwordResetCenter"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="passwordResetCenterTitle"
+                aria-hidden="true"
+              >
+                <div
+                  className="modal-dialog modal-dialog-centered"
+                  role="document"
+                >
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="passwordResetLongTitle">
+                        Enter Your Email Address
+                      </h5>
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form
+                      id="passwordResetForm"
+                      onSubmit={this.sendPasswordReset}
+                    >
+                      <div className="form-group mx-sm-3 mb-2">
+                        <label htmlFor="emailForReset" className="sr-only">
+                          Password
+                        </label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          id="emailForReset"
+                          placeholder="user@mail.com"
+                          name="emailForReset"
+                          value={this.state.emailForReset}
+                          onChange={this.onChange}
+                          required
+                        />
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="btn btn-secondary"
+                          data-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="submit" className="btn btn-success">
+                          Reset Password
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
