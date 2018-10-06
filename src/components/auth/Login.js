@@ -13,6 +13,11 @@ class Login extends Component {
     password: ""
   };
 
+  componentDidMount() {
+    // clear error message if it persisted from before
+    this.props.notifyUser(null, null);
+  }
+
   onSubmit = e => {
     e.preventDefault();
 
@@ -33,7 +38,7 @@ class Login extends Component {
     const { message, messageType } = this.props.notify;
 
     return (
-      <div className="row" style={{ height: `${window.innerHeight - 144}px` }}>
+      <div className="row" style={{ height: `${window.innerHeight}px` }}>
         <div className="col-md-6 mx-auto">
           <div className="card">
             <div className="card-body">

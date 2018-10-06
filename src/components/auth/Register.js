@@ -12,14 +12,26 @@ import { defaultItems } from "../../lib/defaultItems";
 class Register extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    confirmPassword: ""
   };
+
+  componentDidMount() {
+    // clear error message if it persisted from before
+    this.props.notifyUser(null, null);
+  }
 
   onSubmit = e => {
     e.preventDefault();
 
     const { firebase, firestore, notifyUser } = this.props;
-    const { email, password } = this.state;
+    const { email, password, confirmPassword } = this.state;
+
+    // check if confirmPassword matches
+    if (password !== confirmPassword) {
+      notifyUser("Your passwords do not match.", "error");
+      return;
+    }
 
     // Register with firebase
     firebase
@@ -45,7 +57,7 @@ class Register extends Component {
     const { message, messageType } = this.props.notify;
 
     return (
-      <div className="row" style={{ height: `${window.innerHeight - 144}px` }}>
+      <div className="row" style={{ height: `${window.innerHeight}px` }}>
         <div className="col-md-6 mx-auto">
           <div className="card">
             <div className="card-body">
@@ -77,6 +89,17 @@ class Register extends Component {
                     name="password"
                     required
                     value={this.state.password}
+                    onChange={this.onChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="confirmPassword">Confirm Password</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    name="confirmPassword"
+                    required
+                    value={this.state.confirmPassword}
                     onChange={this.onChange}
                   />
                 </div>
