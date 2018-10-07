@@ -118,12 +118,17 @@ class Item extends Component {
 
     return (
       <div className="item-card card">
-        <img
-          className="w-100 h-100"
-          src={materials[material.toLowerCase()]}
-          alt={material}
-          style={{ maxHeight: "160px" }}
-        />
+        <div
+          className="d-flex flex-column justify-content-center"
+          style={{ minHeight: "0" }}
+        >
+          <img
+            className="w-100 h-100"
+            style={{ minHeight: "0" }}
+            src={materials[material.toLowerCase()]}
+            alt={material}
+          />
+        </div>
         <div className="card-body p-3">
           <div className="d-flex justify-content-between mb-2">
             <div>

@@ -81,12 +81,15 @@ class AddItem extends Component {
             ) : null}
             <form onSubmit={this.onSubmit}>
               <div className="form-group">
-                <label htmlFor="itemName">Item Name</label>
+                <label htmlFor="itemName">
+                  Item Name (Max Length: 25 Characters)
+                </label>
                 <input
                   type="text"
                   className="form-control"
                   name="itemName"
                   minLength="2"
+                  maxLength="25"
                   required
                   onChange={this.onChange}
                   value={this.state.itemName}
