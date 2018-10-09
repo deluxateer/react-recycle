@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 [App Link](https://react-recycle.firebaseapp.com/)
 
-React Recycle is a web app that tracks materials that a user recycles, and how much energy and resources they save. It is made with React and Redux, with Firebase/Firestore on the backend. This app was made for people who are interested in protecting our planet, who want to their part in reducing waste and **actually see** the impact that their contributions are making.
+React Recycle is a web app that tracks materials that a user recycles, and how much energy and resources they save. It is made with React and Redux, with Firebase/Firestore on the backend. This app was made for people and companies who are interested in protecting our planet, who want to their part in reducing waste and **actually see** the impact that their contributions are making.
 
 ## How It Works
 
