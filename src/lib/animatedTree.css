@@ -182,3 +182,163 @@
     transform: rotate(-85deg);
   }
 }
+
+/* Support for Edge, since they can't handle calc() properly */
+@supports (-ms-ime-align: auto) {
+  .trunk,
+  .trunk div {
+    background: #28a745;
+    will-change: transform;
+    width: 14vmin;
+    height: 1.4vmin;
+    position: absolute;
+    margin-left: -1.4vmin;
+    animation-name: rot;
+    animation-duration: 2.26562s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    transform-origin: 0.7vmin 0.7vmin;
+    animation-timing-function: ease-in-out;
+  }
+
+  .trunk.trunk,
+  .trunk div.trunk {
+    bottom: 0;
+    left: 50%;
+    animation-name: rot-root;
+    animation-duration: 2.46428s;
+  }
+
+  .trunk > div,
+  .trunk div > div {
+    top: 0;
+    left: 14vmin;
+    animation-duration: calc((inherit / 2));
+  }
+
+  .trunk > div:nth-child(2),
+  .trunk div > div:nth-child(2) {
+    animation-name: rot-inv;
+    animation-duration: 1.777351213486541s;
+  }
+
+  @-moz-keyframes rot {
+    from {
+      transform: rotate(5deg) scale(0.72);
+    }
+
+    to {
+      transform: rotate(35deg) scale(0.72);
+    }
+  }
+
+  @-webkit-keyframes rot {
+    from {
+      transform: rotate(5deg) scale(0.72);
+    }
+
+    to {
+      transform: rotate(35deg) scale(0.72);
+    }
+  }
+
+  @-o-keyframes rot {
+    from {
+      transform: rotate(5deg) scale(0.72);
+    }
+
+    to {
+      transform: rotate(35deg) scale(0.72);
+    }
+  }
+
+  @keyframes rot {
+    from {
+      transform: rotate(5deg) scale(0.72);
+    }
+
+    to {
+      transform: rotate(35deg) scale(0.72);
+    }
+  }
+
+  @-moz-keyframes rot-inv {
+    from {
+      transform: rotate(-35deg) scale(0.72);
+    }
+
+    to {
+      transform: rotate(-5deg) scale(0.72);
+    }
+  }
+
+  @-webkit-keyframes rot-inv {
+    from {
+      transform: rotate(-35deg) scale(0.72);
+    }
+
+    to {
+      transform: rotate(-5deg) scale(0.72);
+    }
+  }
+
+  @-o-keyframes rot-inv {
+    from {
+      transform: rotate(-35deg) scale(0.72);
+    }
+
+    to {
+      transform: rotate(-5deg) scale(0.72);
+    }
+  }
+
+  @keyframes rot-inv {
+    from {
+      transform: rotate(-35deg) scale(0.72);
+    }
+
+    to {
+      transform: rotate(-5deg) scale(0.72);
+    }
+  }
+
+  @-moz-keyframes rot-root {
+    from {
+      transform: rotate(-95deg);
+    }
+
+    to {
+      transform: rotate(-85deg);
+    }
+  }
+
+  @-webkit-keyframes rot-root {
+    from {
+      transform: rotate(-95deg);
+    }
+
+    to {
+      transform: rotate(-85deg);
+    }
+  }
+
+  @-o-keyframes rot-root {
+    from {
+      transform: rotate(-95deg);
+    }
+
+    to {
+      transform: rotate(-85deg);
+    }
+  }
+
+  @keyframes rot-root {
+    from {
+      transform: rotate(-95deg);
+    }
+
+    to {
+      transform: rotate(-85deg);
+    }
+  }
+}

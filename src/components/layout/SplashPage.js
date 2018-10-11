@@ -33,7 +33,7 @@ class SplashPage extends Component {
           style={{ height: `${window.innerHeight * 0.7}px` }}
         >
           <div className="container h-100">
-            <div className="row h-100 d-flex flex-column justify-content-around">
+            <div className="h-100 d-flex flex-column justify-content-around">
               <div className="text-light">
                 <h2>
                   Cut costs and save the environment, one bottle at a time.
