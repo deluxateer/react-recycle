@@ -1,0 +1,184 @@
+:root {
+  /* --- Play with these vars !!! --- */
+  --l: 14vmin;
+  --w: calc(var(--l) / 10);
+  --angle: 20deg;
+  --spread: 30deg;
+  --scale: 0.72;
+  /* --speed: 0.5hz; */
+  --time: 2s;
+  /* --time: calc(1 / var(--speed)) 's' ; */
+}
+
+.trunk,
+.trunk div {
+  background: #28a745;
+  will-change: transform;
+  width: var(--l);
+  height: var(--w);
+  position: absolute;
+  margin-left: calc(-1 * var(--w));
+  animation-name: rot;
+  animation-duration: calc(var(--time) * 1.13281);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  transform-origin: calc(var(--w) / 2) calc(var(--w) / 2);
+  animation-timing-function: ease-in-out;
+}
+
+.trunk.trunk,
+.trunk div.trunk {
+  bottom: 0%;
+  left: 50%;
+  animation-name: rot-root;
+  animation-duration: calc(var(--time) * 1.23214);
+}
+
+.trunk > div,
+.trunk div > div {
+  top: 0;
+  left: var(--l);
+  animation-duration: calc(inherit / 2);
+}
+
+.trunk > div:nth-child(2),
+.trunk div > div:nth-child(2) {
+  animation-name: rot-inv;
+  animation-duration: calc(var(--time) / 1.12527);
+}
+
+@-moz-keyframes rot {
+  from {
+    transform: rotate(calc(var(--angle) - calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+
+  to {
+    transform: rotate(calc(var(--angle) + calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+}
+
+@-webkit-keyframes rot {
+  from {
+    transform: rotate(calc(var(--angle) - calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+
+  to {
+    transform: rotate(calc(var(--angle) + calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+}
+
+@-o-keyframes rot {
+  from {
+    transform: rotate(calc(var(--angle) - calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+
+  to {
+    transform: rotate(calc(var(--angle) + calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+}
+
+@keyframes rot {
+  from {
+    transform: rotate(calc(var(--angle) - calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+
+  to {
+    transform: rotate(calc(var(--angle) + calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+}
+
+@-moz-keyframes rot-inv {
+  from {
+    transform: rotate(calc(-1 * var(--angle) - calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+
+  to {
+    transform: rotate(calc(-1 * var(--angle) + calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+}
+
+@-webkit-keyframes rot-inv {
+  from {
+    transform: rotate(calc(-1 * var(--angle) - calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+
+  to {
+    transform: rotate(calc(-1 * var(--angle) + calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+}
+
+@-o-keyframes rot-inv {
+  from {
+    transform: rotate(calc(-1 * var(--angle) - calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+
+  to {
+    transform: rotate(calc(-1 * var(--angle) + calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+}
+
+@keyframes rot-inv {
+  from {
+    transform: rotate(calc(-1 * var(--angle) - calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+
+  to {
+    transform: rotate(calc(-1 * var(--angle) + calc(var(--spread) / 2)))
+      scale(var(--scale));
+  }
+}
+
+@-moz-keyframes rot-root {
+  from {
+    transform: rotate(-95deg);
+  }
+
+  to {
+    transform: rotate(-85deg);
+  }
+}
+
+@-webkit-keyframes rot-root {
+  from {
+    transform: rotate(-95deg);
+  }
+
+  to {
+    transform: rotate(-85deg);
+  }
+}
+
+@-o-keyframes rot-root {
+  from {
+    transform: rotate(-95deg);
+  }
+
+  to {
+    transform: rotate(-85deg);
+  }
+}
+
+@keyframes rot-root {
+  from {
+    transform: rotate(-95deg);
+  }
+
+  to {
+    transform: rotate(-85deg);
+  }
+}

@@ -7,7 +7,9 @@ import { firebaseConnect } from "react-redux-firebase";
 import { notifyUser } from "../../actions/notifyActions";
 
 import Alert from "../layout/Alert";
+
 import { defaultItems } from "../../lib/defaultItems";
+import { animatedTree } from "../../lib/animatedTree";
 
 class Register extends Component {
   state = {
@@ -57,8 +59,11 @@ class Register extends Component {
     const { message, messageType } = this.props.notify;
 
     return (
-      <div className="row" style={{ height: `${window.innerHeight * 0.85}px` }}>
-        <div className="col-md-6 mx-auto">
+      <div className="row mb-5" style={{ height: "100vh", minHeight: "600px" }}>
+        <div className="col-md-4 m-auto" style={{ height: "30vh" }}>
+          {animatedTree(6)}
+        </div>
+        <div className="col-md-6 m-auto">
           <div className="card">
             <div className="card-body">
               {message ? (
@@ -111,6 +116,15 @@ class Register extends Component {
               </form>
             </div>
           </div>
+          <p className="text-secondary mt-2">
+            Animation credit to{" "}
+            <a
+              className="text-secondary"
+              href="https://codepen.io/yukulele/pen/KCvbi?editors=1000#0"
+            >
+              Yuku
+            </a>
+          </p>
         </div>
       </div>
     );
