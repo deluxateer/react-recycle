@@ -65,7 +65,7 @@ class Login extends Component {
     const { message, messageType } = this.props.notify;
 
     return (
-      <div className="row" style={{ height: `${window.innerHeight}px` }}>
+      <div className="row" style={{ height: `${window.innerHeight * 0.85}px` }}>
         <div className="col-md-6 mx-auto">
           <div className="card">
             <div className="card-body">

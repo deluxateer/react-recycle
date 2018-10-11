@@ -34,9 +34,16 @@ class AppNavbar extends Component {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-success mb-4">
         <div className="container">
-          <Link to="/" className="navbar-brand">
-            <i className="fas fa-recycle" /> React Recycle
-          </Link>
+          {/* Home btn redirects to dashboard if auth else splash page */}
+          {isAuthenticated ? (
+            <Link to="/dashboard" className="navbar-brand">
+              <i className="fas fa-recycle" /> React Recycle
+            </Link>
+          ) : (
+            <Link to="/" className="navbar-brand">
+              <i className="fas fa-recycle" /> React Recycle
+            </Link>
+          )}
           <button
             className="navbar-toggler"
             type="button"
@@ -49,7 +56,7 @@ class AppNavbar extends Component {
             <ul className="navbar-nav mr-auto">
               {isAuthenticated ? (
                 <li className="nav-item">
-                  <Link to="/" className="nav-link">
+                  <Link to="/dashboard" className="nav-link">
                     Summary
                   </Link>
                 </li>

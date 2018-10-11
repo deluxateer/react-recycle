@@ -6,9 +6,10 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import AppNavbar from "./components/layout/AppNavbar";
+import Footer from "./components/layout/Footer";
+import SplashPage from "./components/layout/SplashPage";
 import Dashboard from "./components/layout/Dashboard";
 import TipsAndFacts from "./components/layout/TipsAndFacts";
-import Footer from "./components/layout/Footer";
 import Items from "./components/items/Items";
 import AddItem from "./components/items/AddItem";
 import EditItem from "./components/items/EditItem";
@@ -26,11 +27,16 @@ class App extends Component {
         <Router>
           <div className="App">
             <AppNavbar />
-            <div className="container">
+            <div className="container main-container">
               <Switch>
                 <Route
                   exact
                   path="/"
+                  component={UserIsNotAuthenticated(SplashPage)}
+                />
+                <Route
+                  exact
+                  path="/dashboard"
                   component={UserIsAuthenticated(Dashboard)}
                 />
                 <Route

@@ -24,6 +24,31 @@
 }
 
 /* ---------------
+Splash Page
+------------------*/
+
+.hero {
+  background: linear-gradient(
+      /* rgba(60, 111, 138, 0.5),
+      rgba(145, 156, 163, 0.5),
+      rgba(90, 97, 102, 0.8) */
+        rgba(145, 156, 163, 0.5),
+      rgba(90, 97, 102, 0.8),
+      rgba(60, 111, 138, 0.6)
+    ),
+    url(./media/hero.jpeg) center no-repeat;
+  background-size: cover;
+}
+
+.pillars {
+  background-color: #fdfeff;
+}
+
+.call-to-action {
+  background-color: #1a8a02;
+}
+
+/* ---------------
 Item Card
 ------------------*/
 

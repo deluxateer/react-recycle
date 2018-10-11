@@ -21,7 +21,7 @@ export const UserIsNotAuthenticated = connectedRouterRedirect({
   AuthenticatingComponent: LoadingScreen,
   allowRedirectBack: false,
   redirectPath: (state, ownProps) =>
-    locationHelper.getRedirectQueryParam(ownProps) || "/",
+    locationHelper.getRedirectQueryParam(ownProps) || "/dashboard",
   authenticatingSelector: ({ firebase: { auth, isInitializing } }) =>
     !auth.isLoaded || isInitializing === true,
   authenticatedSelector: ({ firebase: { auth } }) =>

@@ -37,7 +37,7 @@ class Settings extends Component {
       <div>
         <div className="row">
           <div className="col-md-6">
-            <Link to="/" className="btn btn-link text-success">
+            <Link to="/dashboard" className="btn btn-link text-success">
               <i className="fas fa-arrow-circle-left" /> Back To Dashboard
             </Link>
           </div>
